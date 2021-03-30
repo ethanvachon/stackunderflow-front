@@ -99,6 +99,7 @@ export default {
 </script>
 
 <style scoped>
+@import '../assets/tailwind.css';
 .dropdown-menu {
   user-select: none;
   display: block;
