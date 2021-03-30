@@ -6,6 +6,7 @@ import router from './router'
 import bootstrap from 'bootstrap'
 import jquery from 'jquery'
 import popper from 'popper.js'
+import '@/assets/tailwind.css'
 
 const root = createApp(App)
 registerGlobalComponents(root)
