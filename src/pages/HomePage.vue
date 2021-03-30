@@ -8,8 +8,25 @@
 </template>
 
 <script>
+import { onMounted } from 'vue'
+import { logger } from '../utils/Logger'
+import { questionsService } from '../services/QuestionsService'
+import { AppState } from '../AppState'
 export default {
-  name: 'Home'
+  name: 'Home',
+  setup() {
+    onMounted(async() => {
+      try {
+        await questionsService.getQuestions()
+        console.log(AppState.questions)
+      } catch (error) {
+        logger.error(error)
+      }
+    })
+    return {
+
+    }
+  }
 }
 </script>
 
