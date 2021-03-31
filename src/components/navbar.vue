@@ -43,12 +43,12 @@
             class="dropdown-toggle flex items-center"
             @click="state.dropOpen = !state.dropOpen"
           >
-            <img
+            <!-- <img
               :src="user.picture"
               alt="user photo"
               class="rounded-full h-12"
-            />
-            <span class="mx-3">{{ user.name }}</span>
+            /> -->
+            <span class="mx-3 text-yellow-500">{{ user.name }}</span>
           </div>
           <div
             class="dropdown-menu p-0 list-group w-100"
