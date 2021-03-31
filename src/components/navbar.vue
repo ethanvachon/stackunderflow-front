@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark border-bottom bg-white">
+  <nav class="navbar navbar-expand-lg border-bottom bg-white">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
         <h1 class="text-yellow-500">StackUnderflow</h1>
@@ -40,14 +40,13 @@
 
         <div class="dropdown" v-else>
           <div
-            class="dropdown-toggle"
+            class="dropdown-toggle flex items-center"
             @click="state.dropOpen = !state.dropOpen"
           >
             <img
               :src="user.picture"
               alt="user photo"
-              height="40"
-              class="rounded"
+              class="rounded-full h-12"
             />
             <span class="mx-3">{{ user.name }}</span>
           </div>
