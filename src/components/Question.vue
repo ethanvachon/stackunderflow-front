@@ -14,8 +14,8 @@
         <p>{{ question.body }}</p>
       </div>
       <div class="flex justify-between border-top mt-1">
-        <div>
-          <h1>Answers</h1>
+        <div v-if="state.answers">
+          <h1>Answers: {{ state.answers.length }}</h1>
         </div>
         <div>
           {{ question.creator.name }}
@@ -25,8 +25,26 @@
   </div>
 </template>
 <script>
+import { reactive, onMounted } from 'vue'
+import { logger } from '../utils/Logger'
+import { answersService } from '../services/AnswersService'
 export default {
-  props: ['question']
+  props: ['question'],
+  setup(props) {
+    const state = reactive({
+      answers: []
+    })
+    onMounted(async() => {
+      try {
+        state.answers = await answersService.getAnswersByQuestion(props.question.id)
+      } catch (error) {
+        logger.error(error)
+      }
+    })
+    return {
+      state
+    }
+  }
 }
 </script>
 

@@ -1,14 +1,14 @@
 // import { AppState } from '../AppState'
 import { api } from './AxiosService'
 
-class QuestionsService {
+class AnswersService {
   async getAnswersByQuestion(id) {
     const res = await api.get('api/questions/' + id + '/answers')
-    console.log(res.data)
+    return res.data
   }
 
   async getOne(id) {
-    const res = await api.get('api/questions/' + id)
+    const res = await api.get('api/answers/' + id)
     console.log(res.data)
   }
 
@@ -17,13 +17,13 @@ class QuestionsService {
     await api.post('api/answers', newAnswer)
   }
 
-  async editQuestion(newAnswer, id) {
-    await api.put('api/answer/' + id, newAnswer)
+  async editAnswer(newAnswer, id) {
+    await api.put('api/answers/' + id, newAnswer)
   }
 
-  async deleteQuestion(id) {
-    await api.delete('api/questions' + id)
+  async deleteAnswer(id) {
+    await api.delete('api/answers' + id)
   }
 }
 
-export const questionsService = new QuestionsService()
+export const answersService = new AnswersService()
