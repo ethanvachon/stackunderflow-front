@@ -1,8 +1,8 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark border-bottom bg-white">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <h1 class="text-blue-500">StackUnderflow</h1>
+        <h1 class="text-yellow-500">StackUnderflow</h1>
       </div>
     </router-link>
     <button
@@ -20,18 +20,18 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <router-link :to="{ name: 'Home' }" class="nav-link">
-            Home
+            <h1 class="text-yellow-500">Home</h1>
           </router-link>
         </li>
         <li class="nav-item">
           <router-link :to="{ name: 'About' }" class="nav-link">
-            About
+            <h1 class="text-yellow-500">About</h1>
           </router-link>
         </li>
       </ul>
       <span class="navbar-text">
         <button
-          class="btn btn-outline-primary text-uppercase"
+          class="btn btn-custom text-uppercase"
           @click="login"
           v-if="!user.isAuthenticated"
         >
@@ -118,7 +118,8 @@ a:hover {
 .nav-link{
   text-transform: uppercase;
 }
-.nav-item .nav-link.router-link-exact-active{
-  color: var(--primary);
+.btn-custom {
+  color: rgb(245, 158, 11);
+  border-color: rgb(245, 158, 11);
 }
 </style>
