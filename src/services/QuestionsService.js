@@ -9,7 +9,7 @@ class QuestionsService {
 
   async getOne(id) {
     const res = await api.get('api/questions/' + id)
-    console.log(res.data)
+    AppState.question = res.data
   }
 
   async createQuestion(newQuestion) {

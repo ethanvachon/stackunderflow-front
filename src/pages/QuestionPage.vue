@@ -1,0 +1,36 @@
+<template>
+  <div class="container" v-if="state.question">
+    <div class="bg-white rounded shadow p-2 mt-3">
+      {{ state.question }}
+    </div>
+  </div>
+</template>
+<script>
+import { questionsService } from '../services/QuestionsService'
+import { reactive, onMounted, computed } from 'vue'
+import { logger } from '../utils/Logger'
+import { AppState } from '../AppState'
+import { useRoute } from 'vue-router'
+export default {
+  props: ['id'],
+  setup(props) {
+    const state = reactive({
+      question: computed(() => AppState.question)
+    })
+    const route = useRoute()
+    onMounted(async() => {
+      try {
+        await questionsService.getOne(route.params.id)
+      } catch (error) {
+        logger.error(error)
+      }
+    })
+    return {
+      state
+    }
+  }
+}
+</script>
+<style scoped>
+
+</style>
