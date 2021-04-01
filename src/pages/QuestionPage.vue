@@ -1,7 +1,10 @@
 <template>
   <div class="container" v-if="state.question">
     <div class="bg-white rounded shadow p-2 mt-3">
-      {{ state.question }}
+      <div class="flex justify-between">
+        <h1>{{ state.question.title }}</h1>
+        <h1>{{ state.question.posted }}</h1>
+      </div>
     </div>
   </div>
 </template>
