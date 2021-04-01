@@ -1,15 +1,24 @@
 <template>
-  <div class="bg-white rounded shadow px-2 flex">
+  <div class="bg-white rounded shadow px-2 flex" id="card">
     <div class="w-14 flex flex-col justify-center items-center border-right py-2 pr-2 pl-0">
-      <i class="fas fa-sort-up text-yellow-500 text-2xl"></i>
-      <p class="font-bold">{{ question.rating }}</p>
-      <i class="fas fa-sort-down text-red-500 text-2xl"></i>
+      <i class="fas fa-sort-up text-yellow-500 text-2xl" @click="upvote()"></i>
+      <p class="font-bold" :class="{ 'text-yellow-500': question.rating > 0, 'text-red-500': question.rating < 0 }">{{ question.rating }}</p>
+      <i class="fas fa-sort-down text-red-500 text-2xl" @click="downvote()"></i>
     </div>
     <div class="px-2 flex flex-col w-100">
+      <div class="dropdown">
+        <p v-if="state.user.name == question.creator.name">...</p>
+        <div class="dropdown-content">
+          <p @click="deleteQuestion">
+            delete
+          </p>
+        </div>
+      </div>
       <router-link :to="{name: 'QuestionPage', params: {id: question.id}}">
         <div class="flex justify-between border-bottom mb-1 p-1 items-center">
           <h1>{{ question.title }}</h1>
           <p>{{ question.posted }}</p>
+          <p></p>
         </div>
         <div class="flex-grow">
           <p>{{ question.body }}</p>
@@ -29,14 +38,17 @@
   </div>
 </template>
 <script>
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, computed } from 'vue'
 import { logger } from '../utils/Logger'
 import { answersService } from '../services/AnswersService'
+import { questionsService } from '../services/QuestionsService'
+import { AppState } from '../AppState'
 export default {
   props: ['question'],
   setup(props) {
     const state = reactive({
-      answers: []
+      answers: [],
+      user: computed(() => AppState.user)
     })
     onMounted(async() => {
       try {
@@ -46,7 +58,16 @@ export default {
       }
     })
     return {
-      state
+      state,
+      upvote() {
+        questionsService.upvote(props.question.id)
+      },
+      downvote() {
+        questionsService.downvote(props.question.id)
+      },
+      deleteQuestion() {
+        questionsService.deleteQuestion(props.question.id)
+      }
     }
   }
 }
@@ -62,5 +83,26 @@ a {
 }
 a:hover {
   color: black;
+}
+.dropdown {
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  right: 2vw;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 100;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+#card {
+  position: relative;
 }
 </style>

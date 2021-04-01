@@ -22,7 +22,18 @@ class QuestionsService {
   }
 
   async deleteQuestion(id) {
-    await api.delete('api/questions' + id)
+    await api.delete('api/questions/' + id)
+    this.getQuestions()
+  }
+
+  async upvote(id) {
+    await api.put('api/questions/' + id + '/up')
+    this.getQuestions()
+  }
+
+  async downvote(id) {
+    await api.put('api/questions/' + id + '/down')
+    this.getQuestions()
   }
 }
 
