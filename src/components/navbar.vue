@@ -2,7 +2,9 @@
   <nav class="navbar navbar-expand-lg border-bottom bg-white">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <h1 class="text-yellow-500">StackUnderflow</h1>
+        <h1 class="text-yellow-500">
+          StackUnderflow
+        </h1>
       </div>
     </router-link>
     <button
@@ -20,15 +22,23 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <router-link :to="{ name: 'Home' }" class="nav-link">
-            <h1 class="text-yellow-500">Home</h1>
+            <h1 class="text-yellow-500">
+              Home
+            </h1>
           </router-link>
         </li>
         <li class="nav-item">
           <router-link :to="{ name: 'About' }" class="nav-link">
-            <h1 class="text-yellow-500">About</h1>
+            <h1 class="text-yellow-500">
+              About
+            </h1>
           </router-link>
         </li>
       </ul>
+      <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white py-1 px-2 rounded border-yellow-500 border-2" v-if="user.isAuthenticated" data-toggle="modal" data-target="#postQuestion">
+        +
+      </button>
+      <question-post-modal />
       <span class="navbar-text">
         <button
           class="btn btn-custom text-uppercase"

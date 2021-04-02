@@ -13,7 +13,7 @@ class QuestionsService {
   }
 
   async createQuestion(newQuestion) {
-    newQuestion.posted = new Date()
+    console.log('test')
     await api.post('api/questions', newQuestion)
   }
 

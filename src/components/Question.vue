@@ -1,13 +1,17 @@
 <template>
   <div class="bg-white rounded shadow px-2 flex" id="card">
     <div class="w-14 flex flex-col justify-center items-center border-right py-2 pr-2 pl-0">
-      <i class="fas fa-sort-up text-yellow-500 text-2xl" @click="upvote()"></i>
-      <p class="font-bold" :class="{ 'text-yellow-500': question.rating > 0, 'text-red-500': question.rating < 0 }">{{ question.rating }}</p>
-      <i class="fas fa-sort-down text-red-500 text-2xl" @click="downvote()"></i>
+      <i class="fas fa-sort-up text-yellow-500 text-3xl" @click="upvote()"></i>
+      <p class="font-bold" :class="{ 'text-yellow-500': question.rating > 0, 'text-red-500': question.rating < 0 }">
+        {{ question.rating }}
+      </p>
+      <i class="fas fa-sort-down text-red-500 text-3xl" @click="downvote()"></i>
     </div>
     <div class="px-2 flex flex-col w-100">
       <div class="dropdown">
-        <p v-if="state.user.name == question.creator.name">...</p>
+        <p v-if="state.user.name == question.creator.name">
+          ...
+        </p>
         <div class="dropdown-content">
           <p @click="deleteQuestion">
             delete
@@ -16,8 +20,8 @@
       </div>
       <router-link :to="{name: 'QuestionPage', params: {id: question.id}}">
         <div class="flex justify-between border-bottom mb-1 p-1 items-center">
-          <h1>{{ question.title }}</h1>
           <p>{{ question.posted }}</p>
+          <h1>{{ question.title }}</h1>
           <p></p>
         </div>
         <div class="flex-grow">
@@ -26,8 +30,8 @@
       </router-link>
       <router-link :to="{name: 'ProfilePage', params: {id: question.creator.id}}">
         <div class="flex justify-between border-top mt-1 p-1 items-center">
-          <div v-if="state.answers">
-            <h1>Answers: {{ state.answers.length }}</h1>
+          <div v-if="state.answers" class="font-bold">
+            <h1>{{ state.answers.length }} Answers</h1>
           </div>
           <div>
             {{ question.creator.name }}
