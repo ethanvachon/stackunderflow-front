@@ -1,13 +1,13 @@
 <template>
   <div class="container" v-if="state.loaded">
-    <div class="bg-white rounded shadow pb-3 mt-3">
-      <div class="flex justify-center pt-1">
+    <div class="bg-white rounded shadow mt-3">
+      <div class="flex justify-center pt-1 border-bottom mb-1">
         <p class="font-bold text-sm">
           {{ state.question.posted }}
         </p>
       </div>
-      <div class="flex">
-        <div class="w-14 flex flex-column justify-center items-center">
+      <div class="flex border-bottom mb-1">
+        <div class="w-14 flex flex-column justify-center items-center border-right mr-1">
           <i class="fas fa-sort-up text-yellow-500 text-3xl" @click="upvote()"></i>
           <p class="font-bold" :class="{ 'text-yellow-500': state.question.rating > 0, 'text-red-500': state.question.rating < 0 }">
             {{ state.question.rating }}
@@ -22,6 +22,9 @@
             {{ state.question.body }}
           </p>
         </div>
+      </div>
+      <div>
+        {{ state.answers.length }} Answers
       </div>
     </div>
     <answer v-for="answer in state.answers" :key="answer.id" :answer="answer" />
