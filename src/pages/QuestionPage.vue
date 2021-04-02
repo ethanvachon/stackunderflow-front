@@ -23,8 +23,9 @@
           </p>
         </div>
       </div>
-      <div>
-        {{ state.answers.length }} Answers
+      <div class="flex justify-around">
+        <p>{{ state.answers.length }} Answers</p>
+        <p>{{ state.question.creator.name }}</p>
       </div>
     </div>
     <answer v-for="answer in state.answers" :key="answer.id" :answer="answer" />
