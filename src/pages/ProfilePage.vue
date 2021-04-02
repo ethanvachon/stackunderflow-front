@@ -17,7 +17,7 @@ export default {
       profile: computed(() => AppState.profile)
     })
     const route = useRoute()
-    onMounted(async () => {
+    onMounted(async() => {
       try {
         await profilesService.getProfile(route.params.id)
       } catch (error) {
@@ -32,5 +32,5 @@ export default {
 </script>
 
 <style scoped>
-
+@import '../assets/tailwind.css';
 </style>
