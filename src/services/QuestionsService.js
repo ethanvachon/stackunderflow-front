@@ -27,12 +27,12 @@ class QuestionsService {
   }
 
   async upvote(id) {
-    await api.put('api/questions/' + id + '/up')
+    await api.put('api/answers/' + id + '/up')
     this.getQuestions()
   }
 
   async downvote(id) {
-    await api.put('api/questions/' + id + '/down')
+    await api.put('api/answers/' + id + '/down')
     this.getQuestions()
   }
 }

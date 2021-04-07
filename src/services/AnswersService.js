@@ -21,8 +21,19 @@ class AnswersService {
     await api.put('api/answers/' + id, newAnswer)
   }
 
-  async deleteAnswer(id) {
+  async deleteAnswer(id, questionId) {
     await api.delete('api/answers' + id)
+    await this.getAnswersByQuestion(questionId)
+  }
+
+  async upvote(id) {
+    await api.put('api/questions/' + id + '/up')
+    this.getQuestions()
+  }
+
+  async downvote(id) {
+    await api.put('api/questions/' + id + '/down')
+    this.getQuestions()
   }
 }
 
