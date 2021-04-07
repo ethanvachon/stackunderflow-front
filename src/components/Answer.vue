@@ -25,9 +25,11 @@
       </div>
       {{ answer.body }}
     </div>
-    <div class="flex justify-around">
-      <p>{{ answer.creator.name }}</p>
-    </div>
+    <router-link :to="{name: 'ProfilePage', params: {id: answer.creator.id}}">
+      <div class="flex justify-around">
+        <p>{{ answer.creator.name }}</p>
+      </div>
+    </router-link>
   </div>
 </template>
 
@@ -76,5 +78,11 @@ export default {
 }
 .dropdown:hover .dropdown-content {
   display: block;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  color: black;
 }
 </style>
