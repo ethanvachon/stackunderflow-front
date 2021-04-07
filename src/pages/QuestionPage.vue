@@ -5,7 +5,7 @@
         <p class="font-bold text-sm">
           {{ state.question.posted }}
         </p>
-        <div class="dropdown">
+        <div class="dropdown" v-if="state.user.name == state.question.creator.name">
           <h6>
             ...
           </h6>
@@ -77,7 +77,8 @@ export default {
       answers: computed(() => AppState.answers),
       loaded: false,
       newAnswer: {},
-      router: useRouter()
+      router: useRouter(),
+      user: computed(() => AppState.user)
     })
     const route = useRoute()
     onMounted(async() => {

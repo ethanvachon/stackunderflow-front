@@ -7,6 +7,11 @@ class AnswersService {
     AppState.answers = res.data
   }
 
+  async returnAnswersByQuestion(id) {
+    const res = await api.get('api/questions/' + id + '/answers')
+    return res.data
+  }
+
   async getOne(id) {
     await api.get('api/answers/' + id)
   }

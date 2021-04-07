@@ -56,7 +56,7 @@ export default {
     })
     onMounted(async() => {
       try {
-        state.answers = await answersService.getAnswersByQuestion(props.question.id)
+        state.answers = await answersService.returnAnswersByQuestion(props.question.id)
       } catch (error) {
         logger.error(error)
       }

@@ -4,7 +4,7 @@
       <p class="posted font-bold">
         {{ answer.posted }}
       </p>
-      <div class="dropdown">
+      <div class="dropdown" v-if="state.user.name == answer.creator.name">
         <h6>
           ...
         </h6>
@@ -33,10 +33,16 @@
 
 <script>
 import { answersService } from '../services/AnswersService'
+import { AppState } from '../AppState'
+import { reactive, computed } from 'vue'
 export default {
   props: ['answer'],
   setup(props) {
+    const state = reactive({
+      user: computed(() => AppState.user)
+    })
     return {
+      state,
       deleteAnswer() {
         answersService.deleteAnswer(props.answer.id, props.answer.questionId)
       },
