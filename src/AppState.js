@@ -12,5 +12,7 @@ export const AppState = reactive({
   profileQuestions: [],
   profileAnswers: [],
   //  single question for question page
-  question: {}
+  question: {},
+  // answers displayed on question page
+  answers: []
 })

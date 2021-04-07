@@ -1,15 +1,14 @@
-// import { AppState } from '../AppState'
+import { AppState } from '../AppState'
 import { api } from './AxiosService'
 
 class AnswersService {
   async getAnswersByQuestion(id) {
     const res = await api.get('api/questions/' + id + '/answers')
-    return res.data
+    AppState.answers = res.data
   }
 
   async getOne(id) {
-    const res = await api.get('api/answers/' + id)
-    console.log(res.data)
+    await api.get('api/answers/' + id)
   }
 
   async createAnswer(newAnswer) {
@@ -21,18 +20,19 @@ class AnswersService {
     await api.put('api/answers/' + id, newAnswer)
   }
 
-  async deleteAnswer(id) {
+  async deleteAnswer(id, questionId) {
     await api.delete('api/answers/' + id)
+    this.getAnswersByQuestion(questionId)
   }
 
-  async upvote(id) {
+  async upvote(id, questionId) {
     await api.put('api/answers/' + id + '/up')
-    this.getAnswersByQuestion()
+    this.getAnswersByQuestion(questionId)
   }
 
-  async downvote(id) {
+  async downvote(id, questionId) {
     await api.put('api/answers/' + id + '/down')
-    this.getAnswersByQuestion()
+    this.getAnswersByQuestion(questionId)
   }
 }
 

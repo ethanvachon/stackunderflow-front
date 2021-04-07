@@ -63,7 +63,7 @@ export default {
   setup(props) {
     const state = reactive({
       question: computed(() => AppState.question),
-      answers: [],
+      answers: computed(() => AppState.answers),
       loaded: false,
       newAnswer: {}
     })
@@ -71,7 +71,7 @@ export default {
     onMounted(async() => {
       try {
         await questionsService.getOne(route.params.id)
-        state.answers = await answersService.getAnswersByQuestion(route.params.id)
+        await answersService.getAnswersByQuestion(route.params.id)
         state.loaded = true
       } catch (error) {
         logger.error(error)
@@ -92,7 +92,6 @@ export default {
         state.newAnswer.posted = `${hours}:${minutes} ${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`
         state.newAnswer.questionId = state.question.id
         await answersService.createAnswer(state.newAnswer)
-        state.answers = await answersService.getAnswersByQuestion(route.params.id)
         state.newAnswer = {}
       }
     }
