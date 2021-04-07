@@ -25,7 +25,9 @@
       </div>
       <div class="flex justify-around">
         <p>{{ state.answers.length }} Answers</p>
-        <p>{{ state.question.creator.name }}</p>
+        <router-link :to="{name: 'ProfilePage', params: {id: state.question.creator.id}}">
+          <p>{{ state.question.creator.name }}</p>
+        </router-link>
       </div>
     </div>
     <answer v-for="answer in state.answers" :key="answer.id" :answer="answer" />

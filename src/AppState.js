@@ -4,6 +4,8 @@ import { reactive } from 'vue'
 export const AppState = reactive({
   user: {},
   account: {},
+  // profile being viewed on profile page
+  currentProfile: {},
   // all questions on home page
   questions: [],
   // profile page answers/questions

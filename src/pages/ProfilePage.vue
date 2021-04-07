@@ -1,6 +1,8 @@
 <template>
-  <div>
-    test
+  <div class="container" v-if="state.loaded">
+    <div class="bg-white rounded p-2">
+      {{ state.profile }}
+    </div>
   </div>
 </template>
 
@@ -14,12 +16,14 @@ export default {
   props: ['id'],
   setup(props) {
     const state = reactive({
-      profile: computed(() => AppState.profile)
+      profile: computed(() => AppState.currentProfile),
+      loaded: false
     })
     const route = useRoute()
     onMounted(async() => {
       try {
         await profilesService.getProfile(route.params.id)
+        state.loaded = true
       } catch (error) {
         logger.error(error)
       }
