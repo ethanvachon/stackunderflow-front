@@ -6,10 +6,10 @@
         {{ state.profile.name }}
       </div>
       <div class="flex justify-around">
-        <p @click="state.display = 'questions'">
+        <p @click="state.display = 'questions'" class="rounded p-1" :class="{ 'bg-black': state.display == 'questions', 'text-white': state.display == 'questions'}">
           Questions {{ state.questions.length }}
         </p>
-        <p @click="state.display = 'answers'">
+        <p @click="state.display = 'answers'" class="rounded p-1" :class="{ 'bg-black': state.display == 'answers', 'text-white': state.display == 'answers'}">
           Answers {{ state.answers.length }}
         </p>
       </div>
@@ -19,8 +19,10 @@
         <question :question="question" />
       </div>
     </div>
-    <div class="mt-3" v-for="answer in state.answers" :key="answer.id">
-      <answer :answer="answer" />
+    <div v-if="state.display == 'answers'">
+      <div class="mt-3" v-for="answer in state.answers" :key="answer.id">
+        <answer :answer="answer" />
+      </div>
     </div>
   </div>
 </template>

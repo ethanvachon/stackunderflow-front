@@ -1,26 +1,65 @@
 <template>
-  <div class="about text-center">
-    <h1>Welcome {{ account.name }}</h1>
-    <img class="rounded" :src="account.picture" alt="" />
-    <p>{{ account.email }}</p>
+  <div class="container" v-if="state.loaded">
+    <div class="bg-white rounded p-2 mt-3">
+      <div>
+        <img :src="state.profile.picture" class="rounded-full">
+        {{ state.profile.name }}
+      </div>
+      <div class="flex justify-around">
+        <p @click="state.display = 'questions'" class="rounded p-1" :class="{ 'bg-black': state.display == 'questions', 'text-white': state.display == 'questions'}">
+          Questions {{ state.questions.length }}
+        </p>
+        <p @click="state.display = 'answers'" class="rounded p-1" :class="{ 'bg-black': state.display == 'answers', 'text-white': state.display == 'answers'}">
+          Answers {{ state.answers.length }}
+        </p>
+      </div>
+    </div>
+    <div v-if="state.display == 'questions'">
+      <div class="mt-3" v-for="question in state.questions" :key="question.id">
+        <question :question="question" />
+      </div>
+    </div>
+    <div v-if="state.display == 'answers'">
+      <div class="mt-3" v-for="answer in state.answers" :key="answer.id">
+        <answer :answer="answer" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { computed } from 'vue'
+import { reactive, onMounted, computed } from 'vue'
+import { profilesService } from '../services/ProfilesService'
 import { AppState } from '../AppState'
+import { logger } from '../utils/Logger'
+import { accountService } from '../services/AccountService'
 export default {
-  name: 'Account',
-  setup() {
+  props: ['id'],
+  setup(props) {
+    const state = reactive({
+      profile: computed(() => AppState.account),
+      questions: computed(() => AppState.profileQuestions),
+      answers: computed(() => AppState.profileAnswers),
+      loaded: false,
+      display: 'questions'
+    })
+    onMounted(async() => {
+      try {
+        await accountService.getAccount()
+        await profilesService.getQuestionsByProfile(state.profile.id)
+        await profilesService.getAnswersByProfile(state.profile.id)
+        state.loaded = true
+      } catch (error) {
+        logger.error(error)
+      }
+    })
     return {
-      account: computed(() => AppState.account)
+      state
     }
   }
 }
 </script>
 
 <style scoped>
-img {
-  max-width: 100px;
-}
+@import '../assets/tailwind.css';
 </style>
