@@ -1,10 +1,20 @@
 <template>
   <div class="container" v-if="state.loaded">
     <div class="bg-white rounded shadow mt-3">
-      <div class="flex justify-center pt-1 border-bottom mb-1">
+      <div class="flex justify-center pt-1 border-bottom mb-1 relative">
         <p class="font-bold text-sm">
           {{ state.question.posted }}
         </p>
+        <div class="dropdown">
+          <h6>
+            ...
+          </h6>
+          <div class="dropdown-content">
+            <p @click="deleteQuestion()">
+              delete
+            </p>
+          </div>
+        </div>
       </div>
       <div class="flex border-bottom">
         <div class="w-14 flex flex-column justify-center items-center border-right mr-1">
@@ -56,8 +66,9 @@ import { questionsService } from '../services/QuestionsService'
 import { reactive, onMounted, computed } from 'vue'
 import { logger } from '../utils/Logger'
 import { AppState } from '../AppState'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { answersService } from '../services/AnswersService'
+
 export default {
   props: ['id'],
   setup(props) {
@@ -65,7 +76,8 @@ export default {
       question: computed(() => AppState.question),
       answers: computed(() => AppState.answers),
       loaded: false,
-      newAnswer: {}
+      newAnswer: {},
+      router: useRouter()
     })
     const route = useRoute()
     onMounted(async() => {
@@ -93,6 +105,10 @@ export default {
         state.newAnswer.questionId = state.question.id
         await answersService.createAnswer(state.newAnswer)
         state.newAnswer = {}
+      },
+      async deleteQuestion() {
+        await questionsService.deleteQuestion(route.params.id)
+        state.router.push({ path: '/' })
       }
     }
   }
@@ -102,5 +118,23 @@ export default {
 @import '../assets/tailwind.css';
 .custom {
   width: fit-content;
+}
+.dropdown {
+  position: absolute;
+  display: inline-block;
+  top: 0px;
+  right: 10px;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 </style>
