@@ -31,6 +31,18 @@
       </div>
     </div>
     <answer v-for="answer in state.answers" :key="answer.id" :answer="answer" />
+    <div class="flex justify-center mt-5">
+      <div class="bg-white rounded shadow p-3 custom">
+        <form class="flex justify-center">
+          <textarea class="border p-1 mb-2 rounded" type="text" placeholder="Post An Answer" rows="3" cols="100" />
+        </form>
+        <div class="flex justify-center">
+          <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white py-1 px-2 rounded border-yellow-500 border-2">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -67,8 +79,7 @@ export default {
 </script>
 <style scoped>
 @import '../assets/tailwind.css';
-/* .posted {
-  position: relative;
-  top: 5px;
-} */
+.custom {
+  width: fit-content;
+}
 </style>
