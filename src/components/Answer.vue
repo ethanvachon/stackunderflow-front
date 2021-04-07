@@ -38,7 +38,7 @@ export default {
   setup(props) {
     return {
       deleteAnswer() {
-        answersService.deleteAnswer(props.answer.id, props.answer.questionId)
+        answersService.deleteAnswer(props.answer.id)
       },
       upvote() {
         answersService.upvote(props.answer.id)

@@ -12,28 +12,27 @@ class AnswersService {
     console.log(res.data)
   }
 
-  async createQuestion(newAnswer) {
-    newAnswer.posted = new Date()
+  async createAnswer(newAnswer) {
     await api.post('api/answers', newAnswer)
+    this.getAnswersByQuestion(newAnswer.questionId)
   }
 
   async editAnswer(newAnswer, id) {
     await api.put('api/answers/' + id, newAnswer)
   }
 
-  async deleteAnswer(id, questionId) {
-    await api.delete('api/answers' + id)
-    await this.getAnswersByQuestion(questionId)
+  async deleteAnswer(id) {
+    await api.delete('api/answers/' + id)
   }
 
   async upvote(id) {
-    await api.put('api/questions/' + id + '/up')
-    this.getQuestions()
+    await api.put('api/answers/' + id + '/up')
+    this.getAnswersByQuestion()
   }
 
   async downvote(id) {
-    await api.put('api/questions/' + id + '/down')
-    this.getQuestions()
+    await api.put('api/answers/' + id + '/down')
+    this.getAnswersByQuestion()
   }
 }
 
