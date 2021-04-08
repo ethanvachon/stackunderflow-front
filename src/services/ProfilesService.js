@@ -16,6 +16,11 @@ class ProfilesService {
     const res = await api.get('api/profiles/' + id)
     AppState.currentProfile = res.data
   }
+
+  async getProfiles() {
+    const res = await api.get('api/profiles')
+    AppState.profiles = res.data
+  }
 }
 
 export const profilesService = new ProfilesService()
