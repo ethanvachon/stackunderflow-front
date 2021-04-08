@@ -20,8 +20,13 @@
       </div>
     </div>
     <div v-if="state.display == 'answers'">
-      <div class="mt-3" v-for="answer in state.answers" :key="answer.id">
-        <answer :answer="answer" />
+      <div class="mt-3 mb-5" v-for="answer in state.answers" :key="answer.id">
+        <router-link :to="{name: 'QuestionPage', params: {id: answer.question.id}}">
+          <div class="bg-white p-2 rounded">
+            <p>{{ answer.question.title }}</p>
+          </div>
+          <answer :answer="answer" />
+        </router-link>
       </div>
     </div>
   </div>
@@ -62,4 +67,10 @@ export default {
 
 <style scoped>
 @import '../assets/tailwind.css';
+a {
+  text-decoration: none;
+}
+a:hover {
+  color: black;
+}
 </style>
