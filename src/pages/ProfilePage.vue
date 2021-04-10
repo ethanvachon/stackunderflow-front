@@ -1,5 +1,5 @@
 <template>
-  <div class="col-3" v-if="state.loaded">
+  <div class="container" v-if="state.loaded">
     <div class="bg-white rounded p-2 mt-3">
       <div>
         <img :src="state.profile.picture" class="rounded-full">
