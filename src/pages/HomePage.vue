@@ -1,8 +1,8 @@
 <template>
   <div class="flex-grow-1 container">
-   <div class="mt-3" v-for="question in state.questions" :key="question.id">
-     <question :question="question" />
-   </div>
+    <div class="mt-3" v-for="question in state.questions" :key="question.id">
+      <question :question="question" />
+    </div>
   </div>
 </template>
 

@@ -28,9 +28,9 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link :to="{ name: 'About' }" class="nav-link">
+          <router-link :to="{ name: 'ProfilesPage' }" class="nav-link">
             <h1 class="text-yellow-500">
-              About
+              Profiles
             </h1>
           </router-link>
         </li>

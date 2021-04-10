@@ -1,6 +1,8 @@
 <template>
-  <div>
-    {{ state.profiles }}
+  <div class="container">
+    <div class="row">
+      <profile v-for="profile in state.profiles" :key="profile.id" :profile="profile" />
+    </div>
   </div>
 </template>
 <script>
@@ -23,5 +25,5 @@ export default {
 </script>
 
 <style scoped>
-
+@import '../assets/tailwind.css';
 </style>
