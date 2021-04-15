@@ -40,6 +40,22 @@ class QuestionsService {
     this.getQuestions()
   }
 
+  // referenced on question page for different get req
+  async downvoteqp(id) {
+    await api.put('api/questions/' + id + '/down')
+    this.getOne(id)
+  }
+
+  // referenced on question page for different get req
+  async upvoteqp(id) {
+    await api.put('api/questions/' + id + '/up')
+    const newRating = {
+      RatedId: id
+    }
+    await api.post('api/ratings/', newRating)
+    this.getOne(id)
+  }
+
   async getRatings(id) {
     const res = await api.get('api/questions/' + id + '/ratings')
     return res.data

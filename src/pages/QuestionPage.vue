@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="flex border-bottom">
-        <div class="w-40 flex flex-column justify-center items-center border-right mr-1">
+        <div class="w-48 flex flex-column justify-center items-center border-right mr-1">
           <i class="fas fa-sort-up text-yellow-500 text-3xl" @click="upvote()"></i>
           <p class="font-bold" :class="{ 'text-yellow-500': state.question.rating > 0, 'text-red-500': state.question.rating < 0 }">
             {{ state.question.rating }}
@@ -26,15 +26,19 @@
         </div>
         <div>
           <div class="flex justify-between text-xl pb-1">
-            <h1>{{ state.question.title }}</h1>
+            <h1 class="p-1">
+              {{ state.question.title }}
+            </h1>
           </div>
-          <p class="mt-3">
+          <p class="mt-1 p-2">
             {{ state.question.body }}
           </p>
         </div>
       </div>
-      <div class="flex justify-around">
-        <p>{{ state.answers.length }} Answers</p>
+      <div class="flex justify-around p-1">
+        <p class="font-bold">
+          {{ state.answers.length }} Answers
+        </p>
         <router-link :to="{name: 'ProfilePage', params: {id: state.question.creator.id}}">
           <p>{{ state.question.creator.name }}</p>
         </router-link>
@@ -110,6 +114,12 @@ export default {
       async deleteQuestion() {
         await questionsService.deleteQuestion(route.params.id)
         state.router.push({ path: '/' })
+      },
+      async upvote() {
+        await questionsService.upvoteqp(route.params.id)
+      },
+      async downvote() {
+        await questionsService.downvoteqp(route.params.id)
       }
     }
   }
@@ -137,5 +147,11 @@ export default {
 }
 .dropdown:hover .dropdown-content {
   display: block;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  color: black;
 }
 </style>

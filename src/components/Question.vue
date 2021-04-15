@@ -60,7 +60,10 @@ export default {
       try {
         state.answers = await answersService.returnAnswersByQuestion(props.question.id)
         state.ratings = await questionsService.getRatings(props.question.id)
-        console.log(state.ratings)
+        if (state.ratings.find(r => r.profileId === state.user.id)) {
+          state.rated = true
+        }
+        console.log(state.rated)
       } catch (error) {
         logger.error(error)
       }
