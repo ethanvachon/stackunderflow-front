@@ -19,12 +19,16 @@
         </div>
       </div>
       <router-link :to="{name: 'QuestionPage', params: {id: question.id}}">
-        <div class="flex justify-between border-bottom mb-1 p-1 items-center">
+        <div class="flex justify-between mb-1 p-1 items-center">
           <p>{{ question.posted }}</p>
-          <h1>{{ question.title }}</h1>
           <p></p>
         </div>
-        <div class="flex-grow overflow-elip">
+        <div class="border-bottom">
+          <h1 class="text-xl pb-2">
+            {{ question.title }}
+          </h1>
+        </div>
+        <div class="flex-grow p-2">
           <p>{{ question.body }}</p>
         </div>
       </router-link>

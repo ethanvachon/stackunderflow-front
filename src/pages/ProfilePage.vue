@@ -1,9 +1,17 @@
 <template>
   <div class="container" v-if="state.loaded">
     <div class="bg-white rounded p-2 mt-3">
-      <div>
-        <img :src="state.profile.picture" class="rounded-full">
-        {{ state.profile.name }}
+      <div class="flex justify-center">
+        <img :src="state.profile.picture" class="rounded-full mr-3">
+        <div class="flex justify-center flex-col">
+          <h1 class="text-xl">
+            {{ state.profile.name }}
+          </h1>
+          <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white py-1 mt-1 rounded border-yellow-500 border-2 transition-all" @click="followUser()">
+            Follow
+            <i class="fas fa-user-plus pl-2"></i>
+          </button>
+        </div>
       </div>
       <div class="flex justify-around">
         <p @click="state.display = 'questions'" class="rounded p-1" :class="{ 'bg-black': state.display == 'questions', 'text-white': state.display == 'questions'}">
@@ -38,6 +46,7 @@ import { profilesService } from '../services/ProfilesService'
 import { useRoute } from 'vue-router'
 import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
+import { followingService } from '../services/FollowingService'
 export default {
   props: ['id'],
   setup(props) {
@@ -60,7 +69,13 @@ export default {
       }
     })
     return {
-      state
+      state,
+      followUser() {
+        const newFollow = {
+          FollowerId: state.profile.id
+        }
+        followingService.FollowUser(newFollow)
+      }
     }
   }
 }
