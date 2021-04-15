@@ -13,8 +13,8 @@ class QuestionsService {
   }
 
   async createQuestion(newQuestion) {
-    console.log('test')
     await api.post('api/questions', newQuestion)
+    this.getQuestions()
   }
 
   async editQuestion(newQuestion, id) {
@@ -27,13 +27,22 @@ class QuestionsService {
   }
 
   async upvote(id) {
-    await api.put('api/answers/' + id + '/up')
+    await api.put('api/questions/' + id + '/up')
+    const newRating = {
+      RatedId: id
+    }
+    await api.post('api/ratings/', newRating)
     this.getQuestions()
   }
 
   async downvote(id) {
-    await api.put('api/answers/' + id + '/down')
+    await api.put('api/questions/' + id + '/down')
     this.getQuestions()
+  }
+
+  async getRatings(id) {
+    const res = await api.get('api/questions/' + id + '/ratings')
+    return res.data
   }
 }
 

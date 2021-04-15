@@ -24,7 +24,7 @@
           <h1>{{ question.title }}</h1>
           <p></p>
         </div>
-        <div class="flex-grow">
+        <div class="flex-grow overflow-elip">
           <p>{{ question.body }}</p>
         </div>
       </router-link>
@@ -52,11 +52,15 @@ export default {
   setup(props) {
     const state = reactive({
       answers: [],
-      user: computed(() => AppState.user)
+      user: computed(() => AppState.user),
+      ratings: [],
+      rated: false
     })
     onMounted(async() => {
       try {
         state.answers = await answersService.returnAnswersByQuestion(props.question.id)
+        state.ratings = await questionsService.getRatings(props.question.id)
+        console.log(state.ratings)
       } catch (error) {
         logger.error(error)
       }
@@ -64,10 +68,16 @@ export default {
     return {
       state,
       upvote() {
-        questionsService.upvote(props.question.id)
+        if (state.rated === false) {
+          questionsService.upvote(props.question.id)
+          state.rated = true
+        }
       },
       downvote() {
-        questionsService.downvote(props.question.id)
+        if (state.rated === false) {
+          questionsService.downvote(props.question.id)
+          state.rated = true
+        }
       },
       deleteQuestion() {
         questionsService.deleteQuestion(props.question.id)
@@ -108,5 +118,8 @@ a:hover {
 }
 #card {
   position: relative;
+}
+.overflow-elip {
+  text-overflow: ellipsis;
 }
 </style>

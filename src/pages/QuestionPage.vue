@@ -17,7 +17,7 @@
         </div>
       </div>
       <div class="flex border-bottom">
-        <div class="w-14 flex flex-column justify-center items-center border-right mr-1">
+        <div class="w-40 flex flex-column justify-center items-center border-right mr-1">
           <i class="fas fa-sort-up text-yellow-500 text-3xl" @click="upvote()"></i>
           <p class="font-bold" :class="{ 'text-yellow-500': state.question.rating > 0, 'text-red-500': state.question.rating < 0 }">
             {{ state.question.rating }}
