@@ -28,12 +28,14 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
-// import { followingService } from '../services/FollowingService'
+import { reactive, computed } from 'vue'
+import { AppState } from '../AppState'
+import { followingService } from '../services/FollowingService'
 export default {
   props: ['profile'],
   setup(props) {
     const state = reactive({
+      followings: computed(() => AppState.following),
       following: false,
       clicked: false
     })
@@ -49,7 +51,9 @@ export default {
         }
       },
       unfollowUser() {
-
+        state.clicked = false
+        state.following = false
+        followingService.deleteFollowing()
       }
     }
   }

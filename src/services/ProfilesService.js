@@ -12,6 +12,11 @@ class ProfilesService {
     AppState.profileQuestions = res.data
   }
 
+  async getFollowingsByProfile(id) {
+    const res = await api.get('api/profiles/' + id + '/following')
+    AppState.following = res.data
+  }
+
   async getRatingsByProfile(id) {
     const res = await api.get('api/profiles/' + id + '/ratings')
     AppState.ratings = res.data

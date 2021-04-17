@@ -5,6 +5,7 @@ export const AppState = reactive({
   user: {},
   account: {},
   ratings: [],
+  following: [],
   // all profiles on profiles page
   profiles: [],
   // profile being viewed on profile page
