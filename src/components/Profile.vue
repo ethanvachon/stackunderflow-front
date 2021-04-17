@@ -1,14 +1,12 @@
 <template>
-  <div class="col-3 my-4">
+  <div class="col-3 my-3">
     <router-link :to="{name: 'ProfilePage', params: {id: profile.id}}">
-      <div class="my-1 flex items-center bg-white rounded shadow p-2">
-        <div class="w-20 flex justify-center ml-4">
-          <img :src="profile.picture" class="rounded-full h-12">
+      <div class="my-1 justify-end bg-white rounded shadow px-2 pb-2">
+        <div class="flex justify-center items-center pb-1 pt-1">
+          <p>{{ profile.name }}</p>
         </div>
-        <div class="flex flex-col items-center w-50">
-          <h1 class="pl-2 pb-1">
-            {{ profile.name }}
-          </h1>
+        <div class="flex items-center justify-around">
+          <img :src="profile.picture" class="rounded-full h-10">
           <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white p-1 mt-1 rounded border-yellow-500 border-2" @click="followUser()">
             Follow
             <i class="fas fa-user-plus pl-2"></i>
