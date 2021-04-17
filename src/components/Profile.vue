@@ -14,10 +14,14 @@
           Follow
           <i class="fas fa-user-plus pl-2"></i>
         </button>
-        <button v-if="state.followings.find(f => f.followingId == profile.id) || state.clicked == false && state.following == true" @click="state.clicked = true" class="bg-yellow-500 p-1 mt-1 rounded border-yellow-500 border-2 text-white">
+        <button v-if="state.followings.find(f => f.followingId == profile.id) && state.clicked == false" @click="state.clicked = true" class="bg-yellow-500 p-1 mt-1 rounded border-yellow-500 border-2 text-white">
           Following
           <i class="fas fa-user-check pl-2"></i>
         </button>
+        <!-- <button v-if="state.following == true && state.clicked == false" @click="state.clicked = true" class="bg-yellow-500 p-1 mt-1 rounded border-yellow-500 border-2 text-white">
+          Following
+          <i class="fas fa-user-check pl-2"></i>
+        </button> -->
         <button v-if="state.clicked == true" @click="unfollowUser()" class="bg-yellow-500 p-1 mt-1 rounded border-yellow-500 border-2 text-white">
           Unfollow
           <i class="fas fa-user-times pl-2"></i>
@@ -36,13 +40,14 @@ export default {
   setup(props) {
     const state = reactive({
       followings: computed(() => AppState.following),
+      user: computed(() => AppState.user),
       following: false,
       clicked: false
     })
     return {
       state,
       followUser() {
-        if (state.following === false) {
+        if (state.following === false && state.user.isAuthenticated) {
           const newFollow = {
             FollowingId: props.profile.id
           }
@@ -53,7 +58,8 @@ export default {
       unfollowUser() {
         state.clicked = false
         state.following = false
-        followingService.deleteFollowing()
+        const toDelete = state.followings.find(f => f.followingId === props.profile.id)
+        followingService.deleteFollowing(toDelete.id)
       }
     }
   }
