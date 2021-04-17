@@ -1,11 +1,18 @@
 <template>
   <div class="bg-white rounded shadow px-2 flex" id="card">
-    <div class="w-14 flex flex-col justify-center items-center border-right py-2 pr-2 pl-0">
+    <div class="w-14 flex flex-col justify-center items-center border-right py-2 pr-2 pl-0" v-if="!state.ratings.find(r => r.profileId == state.user.id)">
       <i class="fas fa-sort-up text-yellow-500 text-3xl" @click="upvote()"></i>
       <p class="font-bold" :class="{ 'text-yellow-500': question.rating > 0, 'text-red-500': question.rating < 0 }">
         {{ question.rating }}
       </p>
       <i class="fas fa-sort-down text-red-500 text-3xl" @click="downvote()"></i>
+    </div>
+    <div class="w-14 flex flex-col justify-center items-center border-right py-2 pr-2 pl-0" v-if="state.ratings.find(r => r.profileId == state.user.id)">
+      <i class="fas fa-sort-up text-3xl text-gray-400"></i>
+      <p class="font-bold" :class="{ 'text-yellow-500': question.rating > 0, 'text-red-500': question.rating < 0 }">
+        {{ question.rating }}
+      </p>
+      <i class="fas fa-sort-down text-3xl text-gray-400"></i>
     </div>
     <div class="px-2 flex flex-col w-100">
       <div class="dropdown">
@@ -38,7 +45,9 @@
             <h1>{{ state.answers.length }} Answers</h1>
           </div>
           <div>
-            {{ question.creator.name }}
+            <h1 class="font-bold">
+              {{ question.creator.name }}
+            </h1>
           </div>
         </div>
       </router-link>
@@ -56,18 +65,13 @@ export default {
   setup(props) {
     const state = reactive({
       answers: [],
-      user: computed(() => AppState.user),
-      ratings: [],
+      user: computed(() => AppState.account),
+      ratings: computed(() => AppState.ratings),
       rated: false
     })
     onMounted(async() => {
       try {
         state.answers = await answersService.returnAnswersByQuestion(props.question.id)
-        state.ratings = await questionsService.getRatings(props.question.id)
-        if (state.ratings.find(r => r.profileId === state.user.id)) {
-          state.rated = true
-        }
-        console.log(state.rated)
       } catch (error) {
         logger.error(error)
       }
