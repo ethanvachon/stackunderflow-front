@@ -10,11 +10,11 @@
         <router-link :to="{name: 'ProfilePage', params: {id: profile.id}}">
           <img :src="profile.picture" class="rounded-full h-10">
         </router-link>
-        <button v-if="state.following == false" class="text-yellow-500 hover:bg-yellow-500 hover:text-white p-1 mt-1 rounded border-yellow-500 border-2" @click="followUser()">
+        <button v-if="!state.followings.find(f => f.followingId == profile.id) && state.following == false" class="text-yellow-500 hover:bg-yellow-500 hover:text-white p-1 mt-1 rounded border-yellow-500 border-2" @click="followUser()">
           Follow
           <i class="fas fa-user-plus pl-2"></i>
         </button>
-        <button v-if="state.following == true && state.clicked == false" @click="state.clicked = true" class="bg-yellow-500 p-1 mt-1 rounded border-yellow-500 border-2 text-white">
+        <button v-if="state.followings.find(f => f.followingId == profile.id) || state.clicked == false && state.following == true" @click="state.clicked = true" class="bg-yellow-500 p-1 mt-1 rounded border-yellow-500 border-2 text-white">
           Following
           <i class="fas fa-user-check pl-2"></i>
         </button>
@@ -43,10 +43,10 @@ export default {
       state,
       followUser() {
         if (state.following === false) {
-          // const newFollow = {
-          //   FollowerId: props.profile.id
-          // }
-          // followingService.FollowUser(newFollow)
+          const newFollow = {
+            FollowingId: props.profile.id
+          }
+          followingService.FollowUser(newFollow)
           state.following = true
         }
       },
