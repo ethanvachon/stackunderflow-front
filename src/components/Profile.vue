@@ -1,33 +1,55 @@
 <template>
   <div class="col-3 my-3">
-    <router-link :to="{name: 'ProfilePage', params: {id: profile.id}}">
-      <div class="my-1 justify-end bg-white rounded shadow px-2 pb-2">
+    <div class="my-1 justify-end bg-white rounded shadow px-2 pb-2">
+      <router-link :to="{name: 'ProfilePage', params: {id: profile.id}}">
         <div class="flex justify-center items-center pb-1 pt-1">
           <p>{{ profile.name }}</p>
         </div>
-        <div class="flex items-center justify-around">
+      </router-link>
+      <div class="flex items-center justify-around">
+        <router-link :to="{name: 'ProfilePage', params: {id: profile.id}}">
           <img :src="profile.picture" class="rounded-full h-10">
-          <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white p-1 mt-1 rounded border-yellow-500 border-2" @click="followUser()">
-            Follow
-            <i class="fas fa-user-plus pl-2"></i>
-          </button>
-        </div>
+        </router-link>
+        <button v-if="state.following == false" class="text-yellow-500 hover:bg-yellow-500 hover:text-white p-1 mt-1 rounded border-yellow-500 border-2" @click="followUser()">
+          Follow
+          <i class="fas fa-user-plus pl-2"></i>
+        </button>
+        <button v-if="state.following == true && state.clicked == false" @click="state.clicked = true" class="bg-yellow-500 p-1 mt-1 rounded border-yellow-500 border-2 text-white">
+          Following
+          <i class="fas fa-user-check pl-2"></i>
+        </button>
+        <button v-if="state.clicked == true" @click="unfollowUser()" class="bg-yellow-500 p-1 mt-1 rounded border-yellow-500 border-2 text-white">
+          Unfollow
+          <i class="fas fa-user-times pl-2"></i>
+        </button>
       </div>
-    </router-link>
+    </div>
   </div>
 </template>
 
 <script>
-import { followingService } from '../services/FollowingService'
+import { reactive } from 'vue'
+// import { followingService } from '../services/FollowingService'
 export default {
   props: ['profile'],
   setup(props) {
+    const state = reactive({
+      following: false,
+      clicked: false
+    })
     return {
+      state,
       followUser() {
-        const newFollow = {
-          FollowerId: props.profile.id
+        if (state.following === false) {
+          // const newFollow = {
+          //   FollowerId: props.profile.id
+          // }
+          // followingService.FollowUser(newFollow)
+          state.following = true
         }
-        followingService.FollowUser(newFollow)
+      },
+      unfollowUser() {
+
       }
     }
   }
@@ -41,5 +63,11 @@ a {
 }
 a:hover {
   color: black;
+}
+#hover-text-black:hover {
+  color: rgb(245, 158, 11);
+}
+#hover-text-black {
+  color: white;
 }
 </style>
