@@ -17,12 +17,19 @@
         </div>
       </div>
       <div class="flex border-bottom">
-        <div class="w-48 flex flex-column justify-center items-center border-right mr-1">
+        <div class="flex flex-column justify-center items-center border-right mr-1" v-if="!state.ratings.find(r => r.profileId == state.account.id)">
           <i class="fas fa-sort-up text-yellow-500 text-3xl" @click="upvote()"></i>
-          <p class="font-bold" :class="{ 'text-yellow-500': state.question.rating > 0, 'text-red-500': state.question.rating < 0 }">
+          <p class="font-bold mx-3" :class="{ 'text-yellow-500': state.question.rating > 0, 'text-red-500': state.question.rating < 0 }">
             {{ state.question.rating }}
           </p>
           <i class="fas fa-sort-down text-red-500 text-3xl" @click="downvote()"></i>
+        </div>
+        <div class="flex flex-column justify-center items-center border-right mr-1" v-if="state.ratings.find(r => r.profileId == state.account.id)">
+          <i class="fas fa-sort-up text-gray-400 text-3xl"></i>
+          <p class="font-bold mx-3" :class="{ 'text-yellow-500': state.question.rating > 0, 'text-red-500': state.question.rating < 0 }">
+            {{ state.question.rating }}
+          </p>
+          <i class="fas fa-sort-down text-gray-400 text-3xl"></i>
         </div>
         <div>
           <div class="flex justify-between text-xl pb-1">
@@ -40,7 +47,9 @@
           {{ state.answers.length }} Answers
         </p>
         <router-link :to="{name: 'ProfilePage', params: {id: state.question.creator.id}}">
-          <p>{{ state.question.creator.name }}</p>
+          <p class="font-bold">
+            {{ state.question.creator.name }}
+          </p>
         </router-link>
       </div>
     </div>
@@ -79,10 +88,12 @@ export default {
     const state = reactive({
       question: computed(() => AppState.question),
       answers: computed(() => AppState.answers),
+      user: computed(() => AppState.user),
+      account: computed(() => AppState.account),
+      ratings: computed(() => AppState.ratings),
       loaded: false,
       newAnswer: {},
-      router: useRouter(),
-      user: computed(() => AppState.user)
+      router: useRouter()
     })
     const route = useRoute()
     onMounted(async() => {

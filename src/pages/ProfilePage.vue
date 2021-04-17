@@ -2,7 +2,7 @@
   <div class="container" v-if="state.loaded">
     <div class="bg-white rounded p-2 mt-3">
       <div class="flex justify-center">
-        <img :src="state.profile.picture" class="rounded-full mr-3">
+        <img :src="state.profile.picture" class="rounded-full mr-3 my-3">
         <div class="flex justify-center flex-col">
           <h1 class="text-xl">
             {{ state.profile.name }}
@@ -88,5 +88,8 @@ a {
 }
 a:hover {
   color: black;
+}
+img {
+  height: 10vh
 }
 </style>
