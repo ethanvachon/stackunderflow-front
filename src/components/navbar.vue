@@ -34,6 +34,13 @@
             </h1>
           </router-link>
         </li>
+        <li class="nav-item" v-if="user.isAuthenticated">
+          <router-link :to="{ name: 'FeedPage' }" class="nav-link">
+            <h1 class="text-yellow-500">
+              Feed
+            </h1>
+          </router-link>
+        </li>
       </ul>
       <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white py-1 px-2 rounded border-yellow-500 border-2" v-if="user.isAuthenticated" data-toggle="modal" data-target="#postQuestion">
         +

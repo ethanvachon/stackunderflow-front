@@ -1,7 +1,9 @@
 <template>
-  <div>
-    {{ state.feedQuestions }}
-    {{ state.feedAnswers }}
+  <div class="container">
+    <div class="bg-white rounded shadow flex justify-around">
+      <p>Questions</p>
+      <p>Answers</p>
+    </div>
   </div>
 </template>
 
