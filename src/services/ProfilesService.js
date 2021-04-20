@@ -35,13 +35,20 @@ class ProfilesService {
   async getQuestionFeed() {
     const id = AppState.account.id
     const res = await api.get('api/profiles/' + id + '/questionfeed')
-    AppState.questionFeed = res.data
+    for (let i = 0; i < res.data.length; i++) {
+      res.data[i].map(q => AppState.questionFeed.push(q))
+    }
+    console.log(AppState.questionFeed)
+    // AppState.questionFeed = res.data
   }
 
   async getAnswerFeed() {
     const id = AppState.account.id
     const res = await api.get('api/profiles/' + id + '/answerfeed')
-    AppState.answerFeed = res.data
+    for (let i = 0; i < res.data.length; i++) {
+      res.data[i].map(a => AppState.answerFeed.push(a))
+    }
+    // AppState.answerFeed = res.data
   }
 }
 
