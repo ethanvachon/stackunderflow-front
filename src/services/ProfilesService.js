@@ -31,6 +31,18 @@ class ProfilesService {
     const res = await api.get('api/profiles')
     AppState.profiles = res.data
   }
+
+  async getQuestionFeed() {
+    const id = AppState.account.id
+    const res = await api.get('api/profiles/' + id + '/questionfeed')
+    AppState.questionFeed = res.data
+  }
+
+  async getAnswerFeed() {
+    const id = AppState.account.id
+    const res = await api.get('api/profiles/' + id + '/answerfeed')
+    AppState.answerFeed = res.data
+  }
 }
 
 export const profilesService = new ProfilesService()

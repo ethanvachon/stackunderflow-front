@@ -32,6 +32,12 @@ const routes = [
     component: loadPage('ProfilesPage')
   },
   {
+    path: '/feed/',
+    name: 'FeedPage',
+    component: loadPage('FeedPage'),
+    beforeEnter: authGuard
+  },
+  {
     path: '/account',
     name: 'Account',
     component: loadPage('AccountPage'),
