@@ -2,10 +2,10 @@
   <div class="container">
     <div class="flex justify-center">
       <div class="bg-white rounded shadow flex justify-around mt-3 sizing">
-        <h1 class="p-2 m-3 hover:text-white hover:bg-black rounded">
+        <h1 class="p-2 m-3 hover:text-white hover:bg-black rounded" @click="state.display = 'questions'">
           Questions
         </h1>
-        <h1 class="p-2 m-3 hover:text-white hover:bg-black rounded">
+        <h1 class="p-2 m-3 hover:text-white hover:bg-black rounded" @click="state.display = 'answers'">
           Answers
         </h1>
       </div>
@@ -16,6 +16,9 @@
       </div>
     </div>
     <div v-if="state.display == 'answers'">
+      <div class="my-3" v-for="answer in state.feedAnswers" :key="answer.id">
+        <answer :answer="answer" />
+      </div>
     </div>
   </div>
 </template>
