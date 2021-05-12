@@ -1,12 +1,7 @@
 <template>
   <div class="col-3 my-3">
     <div class="my-1 justify-end bg-white rounded shadow px-2 pb-2">
-      <router-link :to="{name: 'ProfilePage', params: {id: profile.id}}">
-        <div class="flex justify-center items-center pb-1 pt-1">
-          <p>{{ profile.name }}</p>
-        </div>
-      </router-link>
-      <div class="flex items-center justify-around">
+      <div class="flex items-center justify-around pt-2">
         <router-link :to="{name: 'ProfilePage', params: {id: profile.id}}">
           <img :src="profile.picture" class="rounded-full h-10">
         </router-link>
@@ -27,6 +22,12 @@
           <i class="fas fa-user-times pl-2"></i>
         </button>
       </div>
+
+      <router-link :to="{name: 'ProfilePage', params: {id: profile.id}}">
+        <div class="flex justify-center items-center pb-1 pt-1">
+          <p>{{ profile.name }}</p>
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
