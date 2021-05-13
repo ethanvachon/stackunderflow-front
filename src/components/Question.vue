@@ -1,19 +1,19 @@
 <template>
   <div class="bg-white rounded shadow px-2 flex" id="card">
-    <div class="w-14 flex flex-col justify-center items-center border-right py-2 pr-2 pl-0" v-if="!state.ratings.find(r => r.profileId == state.user.id && r.ratedId == question.id)">
-      <i class="fas fa-sort-up text-yellow-500 text-3xl" @click="upvote()"></i>
+    <div class="w-14 flex flex-col justify-center items-center border-right py-2 pr-2 pl-0">
+      <i class="fas fa-sort-up text-3xl" :class="{ 'text-yellow-500' : !state.rating, 'text-gray-400' : state.rating }" @click="upvote()"></i>
       <p class="font-bold" :class="{ 'text-yellow-500': question.rating > 0, 'text-red-500': question.rating < 0 }">
         {{ question.rating }}
       </p>
-      <i class="fas fa-sort-down text-red-500 text-3xl" @click="downvote()"></i>
+      <i class="fas fa-sort-down text-3xl" :class="{ 'text-red-500' : !state.rating, 'text-gray-400' : state.rating }" @click="downvote()"></i>
     </div>
-    <div class="w-14 flex flex-col justify-center items-center border-right py-2 pr-2 pl-0" v-if="state.ratings.find(r => r.profileId == state.user.id && r.ratedId == question.id)">
+    <!-- <div class="w-14 flex flex-col justify-center items-center border-right py-2 pr-2 pl-0" v-if="state.rating">
       <i class="fas fa-sort-up text-3xl text-gray-400"></i>
       <p class="font-bold" :class="{ 'text-yellow-500': question.rating > 0, 'text-red-500': question.rating < 0 }">
         {{ question.rating }}
       </p>
       <i class="fas fa-sort-down text-3xl text-gray-400"></i>
-    </div>
+    </div> -->
     <div class="px-2 flex flex-col w-100">
       <div class="dropdown">
         <p v-if="state.user.name == question.creator.name">
@@ -66,7 +66,7 @@ export default {
     const state = reactive({
       answers: [],
       user: computed(() => AppState.account),
-      ratings: computed(() => AppState.ratings),
+      rating: computed(() => AppState.ratings.find(r => r.profileId === state.user.id && r.ratedId === props.question.id)),
       rated: false
     })
     onMounted(async() => {
@@ -79,13 +79,13 @@ export default {
     return {
       state,
       upvote() {
-        if (state.rated === false) {
+        if (state.rated === false && !state.rating) {
           questionsService.upvote(props.question.id)
           state.rated = true
         }
       },
       downvote() {
-        if (state.rated === false) {
+        if (state.rated === false && !state.rating) {
           questionsService.downvote(props.question.id)
           state.rated = true
         }
