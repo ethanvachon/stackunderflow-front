@@ -1,19 +1,17 @@
 <template>
   <div class="bg-white rounded shadow px-2 flex" id="card">
     <div class="w-14 flex flex-col justify-center items-center border-right py-2 pr-2 pl-0">
-      <i class="fas fa-sort-up text-3xl" :class="{ 'text-yellow-500' : !state.rating, 'text-gray-400' : state.rating }" @click="upvote()"></i>
+      <i v-if="state.tempRating == null" class="fas fa-sort-up text-3xl" :class="{ 'text-yellow-500' : !state.rating || state.rating.rating == true, 'text-gray-400' : state.rating && state.rating.rating == false }" @click="upvote()"></i>
+
+      <i v-if="state.tempRating != null" class="fas fa-sort-up text-3xl" :class="{ 'text-yellow-500' : state.tempRating , 'text-gray-400' : state.tempRating == false }"></i>
+
       <p class="font-bold" :class="{ 'text-yellow-500': question.rating > 0, 'text-red-500': question.rating < 0 }">
         {{ question.rating }}
       </p>
-      <i class="fas fa-sort-down text-3xl" :class="{ 'text-red-500' : !state.rating, 'text-gray-400' : state.rating }" @click="downvote()"></i>
+      <i v-if="state.tempRating == null" class="fas fa-sort-down text-3xl" :class="{ 'text-red-500' : !state.rating || state.rating.rating == false, 'text-gray-400' : state.rating && state.rating.rating == true }" @click="downvote()"></i>
+
+      <i v-if="state.tempRating != null" class="fas fa-sort-down text-3xl" :class="{ 'text-red-500' : state.tempRating == false, 'text-gray-400' : state.tempRating }"></i>
     </div>
-    <!-- <div class="w-14 flex flex-col justify-center items-center border-right py-2 pr-2 pl-0" v-if="state.rating">
-      <i class="fas fa-sort-up text-3xl text-gray-400"></i>
-      <p class="font-bold" :class="{ 'text-yellow-500': question.rating > 0, 'text-red-500': question.rating < 0 }">
-        {{ question.rating }}
-      </p>
-      <i class="fas fa-sort-down text-3xl text-gray-400"></i>
-    </div> -->
     <div class="px-2 flex flex-col w-100">
       <div class="dropdown">
         <p v-if="state.user.name == question.creator.name">
@@ -67,7 +65,8 @@ export default {
       answers: [],
       user: computed(() => AppState.account),
       rating: computed(() => AppState.ratings.find(r => r.profileId === state.user.id && r.ratedId === props.question.id)),
-      rated: false
+      rated: false,
+      tempRating: null
     })
     onMounted(async() => {
       try {
@@ -82,12 +81,14 @@ export default {
         if (state.rated === false && !state.rating) {
           questionsService.upvote(props.question.id)
           state.rated = true
+          state.tempRating = true
         }
       },
       downvote() {
         if (state.rated === false && !state.rating) {
           questionsService.downvote(props.question.id)
           state.rated = true
+          state.tempRating = false
         }
       },
       deleteQuestion() {

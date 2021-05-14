@@ -1,6 +1,6 @@
 <template>
   <div class="flex-grow-1 container">
-    <div class="mt-3" v-for="question in state.questions" :key="question.id">
+    <div class="my-3" v-for="question in state.questions" :key="question.id">
       <question :question="question" />
     </div>
   </div>
@@ -15,7 +15,7 @@ export default {
   name: 'Home',
   setup() {
     const state = reactive({
-      questions: computed(() => AppState.questions)
+      questions: computed(() => AppState.questions.reverse())
     })
     onMounted(async() => {
       try {

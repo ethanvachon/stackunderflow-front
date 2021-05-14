@@ -29,7 +29,8 @@ class QuestionsService {
   async upvote(id) {
     await api.put('api/questions/' + id + '/up')
     const newRating = {
-      RatedId: id
+      RatedId: id,
+      Rating: true
     }
     await api.post('api/ratings/', newRating)
     this.getQuestions()
@@ -37,12 +38,22 @@ class QuestionsService {
 
   async downvote(id) {
     await api.put('api/questions/' + id + '/down')
+    const newRating = {
+      RatedId: id,
+      Rating: false
+    }
+    await api.post('api/ratings/', newRating)
     this.getQuestions()
   }
 
   // referenced on question page for different get req
   async downvoteqp(id) {
     await api.put('api/questions/' + id + '/down')
+    const newRating = {
+      RatedId: id,
+      Rating: false
+    }
+    await api.post('api/ratings/', newRating)
     this.getOne(id)
   }
 
@@ -50,7 +61,8 @@ class QuestionsService {
   async upvoteqp(id) {
     await api.put('api/questions/' + id + '/up')
     const newRating = {
-      RatedId: id
+      RatedId: id,
+      Rating: true
     }
     await api.post('api/ratings/', newRating)
     this.getOne(id)
