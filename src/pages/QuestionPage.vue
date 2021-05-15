@@ -17,20 +17,25 @@
         </div>
       </div>
       <div class="flex border-bottom">
-        <div class="flex flex-column justify-center items-center border-right mr-1" v-if="!state.ratings.find(r => r.profileId == state.account.id)">
-          <i class="fas fa-sort-up text-yellow-500 text-3xl" @click="upvote()"></i>
-          <p class="font-bold mx-3" :class="{ 'text-yellow-500': state.question.rating > 0, 'text-red-500': state.question.rating < 0 }">
+        <div class="flex flex-column justify-center items-center border-right mr-1 p-2">
+          <i v-if="state.tempRating == null" class="fas fa-sort-up text-3xl" :class="{ 'text-yellow-500' : !state.rating || state.rating.rating == true, 'text-gray-400' : state.rating && state.rating.rating == false }" @click="upvote()"></i>
+
+          <i v-if="state.tempRating != null" class="fas fa-sort-up text-3xl" :class="{ 'text-yellow-500' : state.tempRating , 'text-gray-400' : state.tempRating == false }"></i>
+
+          <p class="font-bold" :class="{ 'text-yellow-500': state.question.rating > 0, 'text-red-500': state.question.rating < 0 }">
             {{ state.question.rating }}
           </p>
-          <i class="fas fa-sort-down text-red-500 text-3xl" @click="downvote()"></i>
+          <i v-if="state.tempRating == null" class="fas fa-sort-down text-3xl" :class="{ 'text-red-500' : !state.rating || state.rating.rating == false, 'text-gray-400' : state.rating && state.rating.rating == true }" @click="downvote()"></i>
+
+          <i v-if="state.tempRating != null" class="fas fa-sort-down text-3xl" :class="{ 'text-red-500' : state.tempRating == false, 'text-gray-400' : state.tempRating }"></i>
         </div>
-        <div class="flex flex-column justify-center items-center border-right mr-1" v-if="state.ratings.find(r => r.profileId == state.account.id)">
+        <!-- <div class="flex flex-column justify-center items-center border-right mr-1" v-if="state.ratings.find(r => r.profileId == state.account.id)">
           <i class="fas fa-sort-up text-gray-400 text-3xl"></i>
           <p class="font-bold mx-3" :class="{ 'text-yellow-500': state.question.rating > 0, 'text-red-500': state.question.rating < 0 }">
             {{ state.question.rating }}
           </p>
           <i class="fas fa-sort-down text-gray-400 text-3xl"></i>
-        </div>
+        </div> -->
         <div>
           <div class="flex justify-between text-xl pb-1">
             <h1 class="p-1">
@@ -90,7 +95,9 @@ export default {
       answers: computed(() => AppState.answers),
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
-      ratings: computed(() => AppState.ratings),
+      rated: false,
+      tempRating: null,
+      rating: computed(() => AppState.ratings.find(r => r.profileId === state.account.id && r.ratedId === state.question.id)),
       loaded: false,
       newAnswer: {},
       router: useRouter()
@@ -127,10 +134,18 @@ export default {
         state.router.push({ path: '/' })
       },
       async upvote() {
-        await questionsService.upvoteqp(route.params.id)
+        if (state.rated === false && !state.rating && state.user.isAuthenticated) {
+          await questionsService.upvoteqp(route.params.id)
+          state.rated = true
+          state.tempRating = true
+        }
       },
       async downvote() {
-        await questionsService.downvoteqp(route.params.id)
+        if (state.rated === false && !state.rating && state.user.isAuthenticated) {
+          await questionsService.downvoteqp(route.params.id)
+          state.rated = true
+          state.tempRating = false
+        }
       }
     }
   }

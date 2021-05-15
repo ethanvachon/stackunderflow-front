@@ -38,7 +38,6 @@ class ProfilesService {
     for (let i = 0; i < res.data.length; i++) {
       res.data[i].map(q => AppState.questionFeed.push(q))
     }
-    console.log(AppState.questionFeed)
     // AppState.questionFeed = res.data
   }
 

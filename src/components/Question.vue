@@ -14,7 +14,7 @@
     </div>
     <div class="px-2 flex flex-col w-100">
       <div class="dropdown">
-        <p v-if="state.user.name == question.creator.name">
+        <p v-if="state.account.name == question.creator.name">
           ...
         </p>
         <div class="dropdown-content">
@@ -63,8 +63,9 @@ export default {
   setup(props) {
     const state = reactive({
       answers: [],
-      user: computed(() => AppState.account),
-      rating: computed(() => AppState.ratings.find(r => r.profileId === state.user.id && r.ratedId === props.question.id)),
+      account: computed(() => AppState.account),
+      user: computed(() => AppState.user),
+      rating: computed(() => AppState.ratings.find(r => r.profileId === state.account.id && r.ratedId === props.question.id)),
       rated: false,
       tempRating: null
     })
@@ -78,14 +79,14 @@ export default {
     return {
       state,
       upvote() {
-        if (state.rated === false && !state.rating) {
+        if (state.rated === false && !state.rating && state.user.isAuthenticated) {
           questionsService.upvote(props.question.id)
           state.rated = true
           state.tempRating = true
         }
       },
       downvote() {
-        if (state.rated === false && !state.rating) {
+        if (state.rated === false && !state.rating && state.user.isAuthenticated) {
           questionsService.downvote(props.question.id)
           state.rated = true
           state.tempRating = false

@@ -49,11 +49,11 @@ export default {
       state,
       followUser() {
         if (state.following === false && state.user.isAuthenticated) {
+          state.following = true
           const newFollow = {
             FollowingId: props.profile.id
           }
           followingService.FollowUser(newFollow)
-          state.following = true
         }
       },
       unfollowUser() {
