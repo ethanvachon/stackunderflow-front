@@ -14,7 +14,7 @@
     </div>
     <div class="px-2 flex flex-col w-100">
       <div class="dropdown">
-        <p v-if="state.account.name == question.creator.name">
+        <p class="text-2xl" v-if="state.account.name == question.creator.name">
           ...
         </p>
         <div class="dropdown-content">
@@ -40,7 +40,7 @@
       <router-link :to="{name: 'ProfilePage', params: {id: question.creator.id}}">
         <div class="flex justify-between border-top mt-1 p-1 items-center">
           <div v-if="state.answers" class="font-bold">
-            <h1>{{ state.answers.length }} Answers</h1>
+            <h1>{{ state.answers.length }} <span v-if="state.answers.length != 1">Answers</span><span v-if="state.answers.length == 1">Answer</span></h1>
           </div>
           <div>
             <h1 class="font-bold">

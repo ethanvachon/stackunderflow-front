@@ -47,20 +47,20 @@ export default {
     })
     return {
       state,
-      followUser() {
+      async followUser() {
         if (state.following === false && state.user.isAuthenticated) {
           state.following = true
           const newFollow = {
             FollowingId: props.profile.id
           }
-          followingService.FollowUser(newFollow)
+          await followingService.FollowUser(newFollow)
         }
       },
-      unfollowUser() {
+      async unfollowUser() {
         state.clicked = false
         state.following = false
         const toDelete = state.followings.find(f => f.followingId === props.profile.id)
-        followingService.deleteFollowing(toDelete.id)
+        await followingService.deleteFollowing(toDelete.id)
       }
     }
   }

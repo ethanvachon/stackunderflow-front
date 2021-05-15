@@ -54,7 +54,11 @@ export default {
         if (hours > 12) {
           hours -= 12
         }
-        state.newQuestion.posted = `${hours}:${date.getMinutes()} ${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`
+        let minutes = date.getMinutes()
+        if (minutes < 10) {
+          minutes = '0' + minutes
+        }
+        state.newQuestion.posted = `${hours}:${minutes} ${date.getMonth()}/${date.getDay()}/${date.getFullYear()}`
         questionsService.createQuestion(state.newQuestion)
         state.newQuestion = {}
       }

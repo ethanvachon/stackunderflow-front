@@ -23,12 +23,12 @@
       </div>
     </div>
     <div v-if="state.display == 'questions'">
-      <div class="mt-3" v-for="question in state.questions" :key="question.id">
+      <div class="my-3" v-for="question in state.questions" :key="question.id">
         <question :question="question" />
       </div>
     </div>
     <div v-if="state.display == 'answers'">
-      <div class="mt-3 mb-5" v-for="answer in state.answers" :key="answer.id">
+      <div class="my-3 mb-5" v-for="answer in state.answers" :key="answer.id">
         <router-link :to="{name: 'QuestionPage', params: {id: answer.question.id}}">
           <div class="bg-white p-2 rounded">
             <p>{{ answer.question.title }}</p>
