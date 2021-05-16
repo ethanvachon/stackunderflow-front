@@ -21,13 +21,6 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link :to="{ name: 'Home' }" class="nav-link">
-            <h1 class="text-yellow-500">
-              Home
-            </h1>
-          </router-link>
-        </li>
-        <li class="nav-item">
           <router-link :to="{ name: 'ProfilesPage' }" class="nav-link">
             <h1 class="text-yellow-500">
               Profiles
@@ -42,7 +35,7 @@
           </router-link>
         </li>
       </ul>
-      <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white py-1 px-2 rounded border-yellow-500 border-2" v-if="user.isAuthenticated" data-toggle="modal" data-target="#postQuestion">
+      <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white font-bold py-1 px-2 rounded border-yellow-500 border-2" v-if="user.isAuthenticated" data-toggle="modal" data-target="#postQuestion">
         +
       </button>
       <question-post-modal />
