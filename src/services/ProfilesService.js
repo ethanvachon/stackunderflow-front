@@ -1,7 +1,15 @@
 import { AppState } from '../AppState'
+import { accountService } from './AccountService'
 import { api } from './AxiosService'
 
 class ProfilesService {
+  async edit(name) {
+    const newProfile = AppState.account
+    newProfile.name = name
+    await api.put('api/profiles', newProfile)
+    accountService.getAccount()
+  }
+
   async getAnswersByProfile(id) {
     const res = await api.get('api/profiles/' + id + '/answers')
     AppState.profileAnswers = res.data

@@ -1,9 +1,19 @@
 <template>
   <div class="container" v-if="state.loaded">
     <div class="bg-white rounded p-2 mt-3">
-      <div>
-        <img :src="state.profile.picture" class="rounded-full">
-        {{ state.profile.name }}
+      <div class="flex justify-center">
+        <img :src="state.profile.picture" class="rounded-full mr-3 my-3">
+        <div class="flex justify-center flex-col">
+          <h1 class="text-xl" v-if="state.editMode == false">
+            {{ state.profile.name }}
+          </h1>
+          <form @submit.prevent="edit()" v-if="state.editMode == true">
+            <input type="text" class="text-xl" v-model="state.newName">
+          </form>
+          <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white py-1 mt-1 rounded border-yellow-500 border-2" @click="state.editMode = !state.editMode">
+            Edit Name
+          </button>
+        </div>
       </div>
       <div class="flex justify-around">
         <p @click="state.display = 'questions'" class="rounded p-1" :class="{ 'bg-black': state.display == 'questions', 'text-white': state.display == 'questions'}">
@@ -46,7 +56,9 @@ export default {
       questions: computed(() => AppState.profileQuestions),
       answers: computed(() => AppState.profileAnswers),
       loaded: false,
-      display: 'questions'
+      display: 'questions',
+      editMode: false,
+      newName: AppState.account.name
     })
     onMounted(async() => {
       try {
@@ -59,7 +71,10 @@ export default {
       }
     })
     return {
-      state
+      state,
+      edit() {
+        profilesService.edit(state.newName)
+      }
     }
   }
 }
