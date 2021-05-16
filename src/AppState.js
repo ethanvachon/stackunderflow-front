@@ -6,6 +6,7 @@ export const AppState = reactive({
   account: {},
   // profile data for ratings and following
   ratings: [],
+  answerRatings: [],
   following: [],
   // data for the feed page
   questionFeed: [],

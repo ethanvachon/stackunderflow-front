@@ -25,6 +25,7 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function() {
   await accountService.getAccount()
   // NOTE if there is something you want to do once the user is authenticated, place that here
   await profilesService.getRatingsByProfile(AppState.account.id)
+  await profilesService.getAnswerRatingsByProfile(AppState.account.id)
   await profilesService.getFollowingsByProfile(AppState.account.id)
   await profilesService.getQuestionFeed()
   await profilesService.getAnswerFeed()

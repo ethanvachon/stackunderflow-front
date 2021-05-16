@@ -32,11 +32,21 @@ class AnswersService {
 
   async upvote(id, questionId) {
     await api.put('api/answers/' + id + '/up')
+    const newRating = {
+      answerId: id,
+      Rating: true
+    }
+    await api.post('api/answerratings/', newRating)
     this.getAnswersByQuestion(questionId)
   }
 
   async downvote(id, questionId) {
     await api.put('api/answers/' + id + '/down')
+    const newRating = {
+      answerId: id,
+      Rating: false
+    }
+    await api.post('api/answerratings/', newRating)
     this.getAnswersByQuestion(questionId)
   }
 }

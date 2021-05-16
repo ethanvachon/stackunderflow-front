@@ -41,7 +41,8 @@ export default {
   props: ['answer'],
   setup(props) {
     const state = reactive({
-      user: computed(() => AppState.user)
+      user: computed(() => AppState.user),
+      rated: false
     })
     return {
       state,
@@ -49,10 +50,16 @@ export default {
         answersService.deleteAnswer(props.answer.id, props.answer.questionId)
       },
       upvote() {
-        answersService.upvote(props.answer.id, props.answer.questionId)
+        if (state.user.isAuthenticated && state.rated === false) {
+          answersService.upvote(props.answer.id, props.answer.questionId)
+          state.rated = true
+        }
       },
       downvote() {
-        answersService.downvote(props.answer.id, props.answer.questionId)
+        if (state.user.isAuthenticated && state.rated === false) {
+          answersService.downvote(props.answer.id, props.answer.questionId)
+          state.rated = true
+        }
       }
     }
   }
