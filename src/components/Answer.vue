@@ -17,11 +17,11 @@
     </div>
     <div class="flex border-bottom">
       <div class="w-14 flex flex-col justify-center items-center py-2 px-2 pl-0 mr-3 border-right">
-        <i class="fas fa-sort-up text-yellow-500 text-3xl" @click="upvote()"></i>
+        <i class="fas fa-sort-up text-3xl" @click="upvote()" :class="{ 'text-yellow-500' : !state.rating || state.rating.rating == true, 'text-gray-400' : state.rating && state.rating.rating == false }"></i>
         <p class="font-bold" :class="{ 'text-yellow-500': answer.rating > 0, 'text-red-500': answer.rating < 0 }">
           {{ answer.rating }}
         </p>
-        <i class="fas fa-sort-down text-red-500 text-3xl" @click="downvote()"></i>
+        <i class="fas fa-sort-down text-red-500 text-3xl" @click="downvote()" :class="{ 'text-red-500' : !state.rating || state.rating.rating == false, 'text-gray-400' : state.rating && state.rating.rating == true }"></i>
       </div>
       {{ answer.body }}
     </div>
@@ -42,6 +42,8 @@ export default {
   setup(props) {
     const state = reactive({
       user: computed(() => AppState.user),
+      account: computed(() => AppState.account),
+      rating: computed(() => AppState.answerRatings.find(r => r.profileId === state.account.id && r.answerId === props.answer.id)),
       rated: false
     })
     return {
@@ -50,13 +52,13 @@ export default {
         answersService.deleteAnswer(props.answer.id, props.answer.questionId)
       },
       upvote() {
-        if (state.user.isAuthenticated && state.rated === false) {
+        if (state.user.isAuthenticated && state.rated === false && !state.rating) {
           answersService.upvote(props.answer.id, props.answer.questionId)
           state.rated = true
         }
       },
       downvote() {
-        if (state.user.isAuthenticated && state.rated === false) {
+        if (state.user.isAuthenticated && state.rated === false && !state.rating) {
           answersService.downvote(props.answer.id, props.answer.questionId)
           state.rated = true
         }
