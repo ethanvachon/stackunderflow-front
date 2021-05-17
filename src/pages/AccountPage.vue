@@ -5,20 +5,28 @@
         <div class="flex justify-center">
           <img :src="state.profile.picture" class="rounded-full mr-3 my-3">
           <div class="flex justify-center flex-col">
-            <h1 class="text-xl" v-if="state.editMode == false">
+            <h1 class="text-xl width border-bottom pb-1" v-if="state.editName == false && state.editImage == false">
               {{ state.profile.name }}
             </h1>
-            <form @submit.prevent="edit()" v-if="state.editMode == true">
-              <input type="text" class="text-xl" v-model="state.newName">
+            <form @submit.prevent="editName()" v-if="state.editName == true">
+              <input type="text" class="text-xl border border-2 rounded width p-1" v-model="state.newName">
+            </form>
+            <form @submit.prevent="editImage()" v-if="state.editImage == true">
+              <input type="text" class="text-xl border border-2 rounded width p-1" v-model="state.newImage">
             </form>
             <!-- <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white py-1 mt-1 rounded border-yellow-500 border-2" @click="state.editMode = !state.editMode">
               Edit Name
             </button> -->
-            <i class="fas fa-cog text-xl" @click="state.options = !state.options"></i>
-            <div v-if="state.options == true" class="bg-white border">
-              <p @click="state.editMode = !state.editMode">
-                Edit Name
-              </p>
+            <div class="dropdown">
+              <i class="fas fa-cog text-xl"></i>
+              <div class="dropdown-content">
+                <p class="border-bottom pb-1" @click="state.editName = !state.editName">
+                  Edit Name
+                </p>
+                <p class="pt-1" @click="state.editImage = !state.editImage">
+                  Edit Image
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -65,9 +73,10 @@ export default {
       answers: computed(() => AppState.profileAnswers),
       loaded: false,
       display: 'questions',
-      editMode: false,
-      options: false,
-      newName: AppState.account.name
+      editName: false,
+      editImage: false,
+      newName: 'new name',
+      newImage: 'new image'
     })
     onMounted(async() => {
       try {
@@ -81,8 +90,13 @@ export default {
     })
     return {
       state,
-      edit() {
-        profilesService.edit(state.newName)
+      editName() {
+        profilesService.editName(state.newName)
+        state.editName = false
+      },
+      editImage() {
+        profilesService.editImage(state.newImage)
+        state.editImage = false
       }
     }
   }
@@ -100,9 +114,25 @@ a:hover {
 .fit-content {
   width: fit-content
 }
-.fa-cog {
+.dropdown {
+  display: inline-block;
   position: absolute;
   top: 10px;
   right: 10px;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 100;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.width {
+  width: 15vw
 }
 </style>

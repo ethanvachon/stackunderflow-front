@@ -3,11 +3,18 @@ import { accountService } from './AccountService'
 import { api } from './AxiosService'
 
 class ProfilesService {
-  async edit(name) {
+  async editName(name) {
     const newProfile = AppState.account
     newProfile.name = name
     await api.put('api/profiles', newProfile)
-    accountService.getAccount()
+    await accountService.getAccount()
+  }
+
+  async editImage(image) {
+    const newProfile = AppState.account
+    newProfile.picture = image
+    await api.put('api/profiles', newProfile)
+    await accountService.getAccount()
   }
 
   async getAnswersByProfile(id) {
