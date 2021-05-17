@@ -17,7 +17,7 @@
     </div>
     <div class="flex border-bottom">
       <div class="w-14 flex flex-col justify-center items-center py-2 px-2 pl-0 mr-3 border-right">
-        <i class="fas fa-sort-up text-3xl" v-if="state.tempRating == null" @click="upvote()" :class="{ 'text-yellow-500' : !state.rating || state.rating.rating == true, 'text-gray-400' : state.rating && state.rating.rating == false }"></i>
+        <i class="fas fa-sort-up text-3xl" v-if="state.tempRating == null" @click="upvote()" :class="{ 'text-yellow-500' : !state.rating || state.rating.rating == true, 'text-gray-400' : state.rating && state.rating.rating == false}"></i>
 
         <i v-if="state.tempRating != null" class="fas fa-sort-up text-3xl" :class="{ 'text-yellow-500' : state.tempRating , 'text-gray-400' : state.tempRating == false }"></i>
 
@@ -25,7 +25,7 @@
           {{ answer.rating }}
         </p>
 
-        <i class="fas fa-sort-down text-red-500 text-3xl" v-if="state.tempRating == null" @click="downvote()" :class="{ 'text-red-500' : !state.rating || state.rating.rating == false, 'text-gray-400' : state.rating && state.rating.rating == true }"></i>
+        <i class="fas fa-sort-down text-3xl" v-if="state.tempRating == null" @click="downvote()" :class="{ 'text-red-500' : !state.rating || state.rating.rating == false, 'text-gray-400' : state.rating && state.rating.rating == true }"></i>
 
         <i v-if="state.tempRating != null" class="fas fa-sort-down text-3xl" :class="{ 'text-red-500' : state.tempRating == false, 'text-gray-400' : state.tempRating }"></i>
       </div>

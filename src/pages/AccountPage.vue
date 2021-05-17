@@ -3,7 +3,7 @@
     <div class="flex justify-center">
       <div class="bg-white rounded p-2 px-5 mt-3 fit-content relative">
         <div class="flex justify-center">
-          <img :src="state.profile.picture" class="rounded-full mr-3 my-3">
+          <img :src="state.profile.picture" class="rounded-full mr-3 my-3 max-height">
           <div class="flex justify-center flex-col">
             <h1 class="text-xl width border-bottom pb-1" v-if="state.editName == false && state.editImage == false">
               {{ state.profile.name }}
@@ -134,5 +134,8 @@ a:hover {
 }
 .width {
   width: 15vw
+}
+.max-height {
+  max-height: 20vh;
 }
 </style>

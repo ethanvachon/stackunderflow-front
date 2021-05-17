@@ -14,7 +14,7 @@ class ProfilesService {
     const newProfile = AppState.account
     newProfile.picture = image
     await api.put('api/profiles', newProfile)
-    await accountService.getAccount()
+    // await accountService.getAccount()
   }
 
   async getAnswersByProfile(id) {
