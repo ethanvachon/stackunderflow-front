@@ -17,11 +17,17 @@
     </div>
     <div class="flex border-bottom">
       <div class="w-14 flex flex-col justify-center items-center py-2 px-2 pl-0 mr-3 border-right">
-        <i class="fas fa-sort-up text-3xl" @click="upvote()" :class="{ 'text-yellow-500' : !state.rating || state.rating.rating == true, 'text-gray-400' : state.rating && state.rating.rating == false }"></i>
+        <i class="fas fa-sort-up text-3xl" v-if="state.tempRating == null" @click="upvote()" :class="{ 'text-yellow-500' : !state.rating || state.rating.rating == true, 'text-gray-400' : state.rating && state.rating.rating == false }"></i>
+
+        <i v-if="state.tempRating != null" class="fas fa-sort-up text-3xl" :class="{ 'text-yellow-500' : state.tempRating , 'text-gray-400' : state.tempRating == false }"></i>
+
         <p class="font-bold" :class="{ 'text-yellow-500': answer.rating > 0, 'text-red-500': answer.rating < 0 }">
           {{ answer.rating }}
         </p>
-        <i class="fas fa-sort-down text-red-500 text-3xl" @click="downvote()" :class="{ 'text-red-500' : !state.rating || state.rating.rating == false, 'text-gray-400' : state.rating && state.rating.rating == true }"></i>
+
+        <i class="fas fa-sort-down text-red-500 text-3xl" v-if="state.tempRating == null" @click="downvote()" :class="{ 'text-red-500' : !state.rating || state.rating.rating == false, 'text-gray-400' : state.rating && state.rating.rating == true }"></i>
+
+        <i v-if="state.tempRating != null" class="fas fa-sort-down text-3xl" :class="{ 'text-red-500' : state.tempRating == false, 'text-gray-400' : state.tempRating }"></i>
       </div>
       {{ answer.body }}
     </div>
@@ -44,7 +50,8 @@ export default {
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
       rating: computed(() => AppState.answerRatings.find(r => r.profileId === state.account.id && r.answerId === props.answer.id)),
-      rated: false
+      rated: false,
+      tempRating: null
     })
     return {
       state,
@@ -55,12 +62,14 @@ export default {
         if (state.user.isAuthenticated && state.rated === false && !state.rating) {
           answersService.upvote(props.answer.id, props.answer.questionId)
           state.rated = true
+          state.tempRating = true
         }
       },
       downvote() {
         if (state.user.isAuthenticated && state.rated === false && !state.rating) {
           answersService.downvote(props.answer.id, props.answer.questionId)
           state.rated = true
+          state.tempRating = false
         }
       }
     }

@@ -1,27 +1,35 @@
 <template>
   <div class="container" v-if="state.loaded">
-    <div class="bg-white rounded p-2 mt-3">
-      <div class="flex justify-center">
-        <img :src="state.profile.picture" class="rounded-full mr-3 my-3">
-        <div class="flex justify-center flex-col">
-          <h1 class="text-xl" v-if="state.editMode == false">
-            {{ state.profile.name }}
-          </h1>
-          <form @submit.prevent="edit()" v-if="state.editMode == true">
-            <input type="text" class="text-xl" v-model="state.newName">
-          </form>
-          <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white py-1 mt-1 rounded border-yellow-500 border-2" @click="state.editMode = !state.editMode">
-            Edit Name
-          </button>
+    <div class="flex justify-center">
+      <div class="bg-white rounded p-2 px-5 mt-3 fit-content relative">
+        <div class="flex justify-center">
+          <img :src="state.profile.picture" class="rounded-full mr-3 my-3">
+          <div class="flex justify-center flex-col">
+            <h1 class="text-xl" v-if="state.editMode == false">
+              {{ state.profile.name }}
+            </h1>
+            <form @submit.prevent="edit()" v-if="state.editMode == true">
+              <input type="text" class="text-xl" v-model="state.newName">
+            </form>
+            <!-- <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white py-1 mt-1 rounded border-yellow-500 border-2" @click="state.editMode = !state.editMode">
+              Edit Name
+            </button> -->
+            <i class="fas fa-cog text-xl" @click="state.options = !state.options"></i>
+            <div v-if="state.options == true" class="bg-white border">
+              <p @click="state.editMode = !state.editMode">
+                Edit Name
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="flex justify-around">
-        <p @click="state.display = 'questions'" class="rounded p-1" :class="{ 'bg-black': state.display == 'questions', 'text-white': state.display == 'questions'}">
-          Questions {{ state.questions.length }}
-        </p>
-        <p @click="state.display = 'answers'" class="rounded p-1" :class="{ 'bg-black': state.display == 'answers', 'text-white': state.display == 'answers'}">
-          Answers {{ state.answers.length }}
-        </p>
+        <div class="flex justify-around">
+          <p @click="state.display = 'questions'" class="rounded p-1" :class="{ 'bg-black': state.display == 'questions', 'text-white': state.display == 'questions'}">
+            Questions {{ state.questions.length }}
+          </p>
+          <p @click="state.display = 'answers'" class="rounded p-1" :class="{ 'bg-black': state.display == 'answers', 'text-white': state.display == 'answers'}">
+            Answers {{ state.answers.length }}
+          </p>
+        </div>
       </div>
     </div>
     <div v-if="state.display == 'questions'">
@@ -58,6 +66,7 @@ export default {
       loaded: false,
       display: 'questions',
       editMode: false,
+      options: false,
       newName: AppState.account.name
     })
     onMounted(async() => {
@@ -87,5 +96,13 @@ a {
 }
 a:hover {
   color: black;
+}
+.fit-content {
+  width: fit-content
+}
+.fa-cog {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 </style>
