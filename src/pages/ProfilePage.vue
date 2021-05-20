@@ -1,25 +1,30 @@
 <template>
   <div class="container" v-if="state.loaded">
-    <div class="bg-white rounded p-2 mt-3">
-      <div class="flex justify-center">
-        <img :src="state.profile.picture" class="rounded-full mr-3 my-3">
-        <div class="flex justify-center flex-col">
-          <h1 class="text-xl">
-            {{ state.profile.name }}
-          </h1>
-          <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white py-1 mt-1 rounded border-yellow-500 border-2 transition-all" @click="followUser()">
-            Follow
-            <i class="fas fa-user-plus pl-2"></i>
-          </button>
+    <div class="flex justify-center">
+      <div class="bg-white rounded p-2 px-5 mt-3 fit-content">
+        <div class="flex justify-center">
+          <img :src="state.profile.picture" class="rounded-full mr-3 my-3">
+          <div class="flex justify-center flex-col">
+            <h1 class="text-xl">
+              {{ state.profile.name }}
+            </h1>
+            <h1 class="py-2 font-bold">
+              Rating: {{ state.profile.rating }}
+            </h1>
+            <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white py-1 mt-1 rounded border-yellow-500 border-2 transition-all" @click="followUser()">
+              Follow
+              <i class="fas fa-user-plus pl-2"></i>
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="flex justify-around">
-        <p @click="state.display = 'questions'" class="rounded p-1" :class="{ 'bg-black': state.display == 'questions', 'text-white': state.display == 'questions'}">
-          Questions {{ state.questions.length }}
-        </p>
-        <p @click="state.display = 'answers'" class="rounded p-1" :class="{ 'bg-black': state.display == 'answers', 'text-white': state.display == 'answers'}">
-          Answers {{ state.answers.length }}
-        </p>
+        <div class="flex justify-around">
+          <p @click="state.display = 'questions'" class="rounded p-1" :class="{ 'bg-black': state.display == 'questions', 'text-white': state.display == 'questions'}">
+            Questions {{ state.questions.length }}
+          </p>
+          <p @click="state.display = 'answers'" class="rounded p-1" :class="{ 'bg-black': state.display == 'answers', 'text-white': state.display == 'answers'}">
+            Answers {{ state.answers.length }}
+          </p>
+        </div>
       </div>
     </div>
     <div v-if="state.display == 'questions'">
@@ -91,5 +96,8 @@ a:hover {
 }
 img {
   height: 10vh
+}
+.fit-content {
+  width: fit-content
 }
 </style>

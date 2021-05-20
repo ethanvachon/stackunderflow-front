@@ -14,6 +14,9 @@
             <form @submit.prevent="editImage()" v-if="state.editImage == true">
               <input type="text" class="text-xl border border-2 rounded width p-1" v-model="state.newImage">
             </form>
+            <h1 class="py-2">
+              Rating: {{ state.profile.rating }}
+            </h1>
             <!-- <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white py-1 mt-1 rounded border-yellow-500 border-2" @click="state.editMode = !state.editMode">
               Edit Name
             </button> -->
