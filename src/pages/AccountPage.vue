@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="state.loaded">
+  <div class="container flex flex-col" v-if="state.loaded">
     <div class="flex justify-center">
       <div class="bg-white rounded p-2 px-5 mt-3 fit-content relative">
         <div class="flex justify-center">
@@ -17,9 +17,6 @@
             <h1 class="py-2">
               Rating: {{ state.profile.rating }}
             </h1>
-            <!-- <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white py-1 mt-1 rounded border-yellow-500 border-2" @click="state.editMode = !state.editMode">
-              Edit Name
-            </button> -->
             <div class="dropdown">
               <i class="fas fa-cog text-xl"></i>
               <div class="dropdown-content">
@@ -48,6 +45,9 @@
         <question :question="question" />
       </div>
     </div>
+    <div class="flex items-center justify-center flex-col flex-grow font-bold" v-if="state.display == 'questions' && state.questions.length == 0">
+      no questions
+    </div>
     <div v-if="state.display == 'answers'">
       <div class="mt-3 mb-5" v-for="answer in state.answers" :key="answer.id">
         <router-link :to="{name: 'QuestionPage', params: {id: answer.question.id}}">
@@ -57,6 +57,9 @@
           <answer :answer="answer" />
         </router-link>
       </div>
+    </div>
+    <div class="flex items-center justify-center flex-col flex-grow font-bold" v-if="state.display == 'answers' && state.answers.length == 0">
+      no answers
     </div>
   </div>
 </template>

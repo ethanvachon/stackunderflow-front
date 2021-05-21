@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="state.loaded">
+  <div class="container flex flex-col" v-if="state.loaded">
     <div class="flex justify-center">
       <div class="bg-white rounded p-2 px-5 mt-3 fit-content">
         <div class="flex justify-center">
@@ -27,12 +27,15 @@
         </div>
       </div>
     </div>
-    <div v-if="state.display == 'questions'">
+    <div v-if="state.display == 'questions' && state.questions.length > 0">
       <div class="my-3" v-for="question in state.questions" :key="question.id">
         <question :question="question" />
       </div>
     </div>
-    <div v-if="state.display == 'answers'">
+    <div class="flex items-center justify-center flex-col flex-grow font-bold" v-if="state.display == 'questions' && state.questions.length == 0">
+      no questions
+    </div>
+    <div v-if="state.display == 'answers' && state.answers.length > 0">
       <div class="my-3 mb-5" v-for="answer in state.answers" :key="answer.id">
         <router-link :to="{name: 'QuestionPage', params: {id: answer.question.id}}">
           <div class="bg-white p-2 rounded">
@@ -41,6 +44,9 @@
           <answer :answer="answer" />
         </router-link>
       </div>
+    </div>
+    <div class="flex items-center justify-center flex-col flex-grow font-bold" v-if="state.display == 'answers' && state.answers.length == 0">
+      no answers
     </div>
   </div>
 </template>
