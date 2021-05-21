@@ -5,7 +5,7 @@
         <div class="flex justify-center">
           <img :src="state.profile.picture" class="rounded-full mr-3 my-3">
           <div class="flex justify-center flex-col">
-            <h1 class="text-xl">
+            <h1 class="text-xl border-bottom pb-1">
               {{ state.profile.name }}
             </h1>
             <h1 class="py-2 font-bold">

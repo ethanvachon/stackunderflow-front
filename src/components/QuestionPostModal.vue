@@ -41,6 +41,7 @@
 <script>
 import { reactive } from 'vue'
 import { questionsService } from '../services/QuestionsService'
+import $ from 'jquery'
 export default {
   setup() {
     const state = reactive({
@@ -49,6 +50,7 @@ export default {
     return {
       state,
       createQuestion() {
+        $('#postQuestion').modal('hide')
         const date = new Date()
         let hours = date.getHours()
         if (hours > 12) {
