@@ -2,7 +2,7 @@
   <div class="container" v-if="state.loaded">
     <div class="bg-white rounded shadow mt-3">
       <div class="flex justify-center pt-1 border-bottom mb-1 relative">
-        <p class="font-bold text-sm">
+        <p class="font-bold">
           {{ state.question.posted }}
         </p>
         <div class="dropdown" v-if="state.user.name == state.question.creator.name">

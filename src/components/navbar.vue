@@ -22,45 +22,47 @@
       </div>
     </router-link>
 
-    <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white font-bold py-1 px-2 rounded border-yellow-500 border-2" v-if="user.isAuthenticated" data-toggle="modal" data-target="#postQuestion">
-      +
-    </button>
-    <question-post-modal />
-    <span class="navbar-text mx-3">
-      <button
-        class="btn btn-custom text-uppercase"
-        @click="login"
-        v-if="!user.isAuthenticated"
-      >
-        Login
+    <div>
+      <button class="text-yellow-500 hover:bg-yellow-500 hover:text-white font-bold py-1 px-2 rounded border-yellow-500 border-2" v-if="user.isAuthenticated" data-toggle="modal" data-target="#postQuestion">
+        +
       </button>
+      <question-post-modal />
+      <span class="navbar-text mx-3">
+        <button
+          class="btn btn-custom text-uppercase"
+          @click="login"
+          v-if="!user.isAuthenticated"
+        >
+          Login
+        </button>
 
-      <div class="dropdown" v-else>
-        <div
-          class="dropdown-toggle flex items-center"
-          @click="state.dropOpen = !state.dropOpen"
-        >
-          <span class="mx-3 text-yellow-500">{{ user.name }}</span>
-        </div>
-        <div
-          class="dropdown-menu p-0 list-group w-100"
-          :class="{ show: state.dropOpen }"
-          @click="state.dropOpen = false"
-        >
-          <router-link :to="{ name: 'Account' }">
-            <div class="list-group-item list-group-item-action hoverable">
-              Account
-            </div>
-          </router-link>
+        <div class="dropdown" v-else>
           <div
-            class="list-group-item list-group-item-action hoverable"
-            @click="logout"
+            class="dropdown-toggle flex items-center"
+            @click="state.dropOpen = !state.dropOpen"
           >
-            logout
+            <span class="mx-3 text-yellow-500">{{ user.name }}</span>
+          </div>
+          <div
+            class="dropdown-menu p-0 list-group w-100"
+            :class="{ show: state.dropOpen }"
+            @click="state.dropOpen = false"
+          >
+            <router-link :to="{ name: 'Account' }">
+              <div class="list-group-item list-group-item-action hoverable">
+                Account
+              </div>
+            </router-link>
+            <div
+              class="list-group-item list-group-item-action hoverable"
+              @click="logout"
+            >
+              logout
+            </div>
           </div>
         </div>
-      </div>
-    </span>
+      </span>
+    </div>
   </nav>
 </template>
 
