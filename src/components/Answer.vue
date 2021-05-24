@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="flex border-bottom">
-      <div class="w-14 flex flex-col justify-center items-center py-2 px-2 pl-0 mr-3 border-right">
+      <div class="flex flex-col justify-center items-center py-2 px-2 pl-0 mr-1 border-right">
         <i class="fas fa-sort-up text-3xl" v-if="state.tempRating == null" @click="upvote()" :class="{ 'text-yellow-500' : !state.rating || state.rating.rating == true, 'text-gray-400' : state.rating && state.rating.rating == false}"></i>
 
         <i v-if="state.tempRating != null" class="fas fa-sort-up text-3xl" :class="{ 'text-yellow-500' : state.tempRating , 'text-gray-400' : state.tempRating == false }"></i>

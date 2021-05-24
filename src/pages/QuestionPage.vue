@@ -29,13 +29,6 @@
 
           <i v-if="state.tempRating != null" class="fas fa-sort-down text-3xl" :class="{ 'text-red-500' : state.tempRating == false, 'text-gray-400' : state.tempRating }"></i>
         </div>
-        <!-- <div class="flex flex-column justify-center items-center border-right mr-1" v-if="state.ratings.find(r => r.profileId == state.account.id)">
-          <i class="fas fa-sort-up text-gray-400 text-3xl"></i>
-          <p class="font-bold mx-3" :class="{ 'text-yellow-500': state.question.rating > 0, 'text-red-500': state.question.rating < 0 }">
-            {{ state.question.rating }}
-          </p>
-          <i class="fas fa-sort-down text-gray-400 text-3xl"></i>
-        </div> -->
         <div>
           <div class="flex justify-between text-xl pb-1">
             <h1 class="p-1">
@@ -59,7 +52,7 @@
       </div>
     </div>
     <answer v-for="answer in state.answers" :key="answer.id" :answer="answer" />
-    <div class="flex justify-center mt-5">
+    <div class="flex justify-center my-3">
       <div class="bg-white rounded shadow p-3 custom">
         <form @submit.prevent="createAnswer()" class="flex justify-center flex-col">
           <textarea v-model="state.newAnswer.body"
@@ -73,8 +66,6 @@
             Submit
           </button>
         </form>
-        <div class="flex justify-center">
-        </div>
       </div>
     </div>
   </div>

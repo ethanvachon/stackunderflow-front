@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar p-0 navbar-expand-lg border-bottom bg-white flex justify-between">
+  <nav class="navbar height navbar-expand-lg border-bottom bg-white flex justify-between">
     <div class="flex">
       <router-link :to="{ name: 'ProfilesPage' }" class="nav-link">
         <h1 class="text-yellow-500">
@@ -113,5 +113,8 @@ a:hover {
 .btn-custom {
   color: rgb(245, 158, 11);
   border-color: rgb(245, 158, 11);
+}
+.height {
+  height: 6vh;
 }
 </style>
