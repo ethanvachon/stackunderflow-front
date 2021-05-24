@@ -3,7 +3,7 @@
     <div class="flex">
       <router-link :to="{ name: 'ProfilesPage' }" class="nav-link">
         <h1 class="text-yellow-500">
-          Profiles
+          Users
         </h1>
       </router-link>
 
@@ -16,7 +16,7 @@
 
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <h1 class="text-yellow-500">
+        <h1 class="text-yellow-500 font-bold">
           StackUnderflow
         </h1>
       </div>
