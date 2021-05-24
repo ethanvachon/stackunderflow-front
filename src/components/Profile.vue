@@ -16,7 +16,9 @@
           <p>Rating: <span class="font-bold">{{ profile.rating }}</span></p>
         </div>
       </div>
-      <div class="flex justify-center">
+      <div class="flex">
+        <div class="w-16">
+        </div>
         <button v-if="!state.followings.find(f => f.followingId == profile.id) && state.following == false" class="text-yellow-500 hover:bg-yellow-500 hover:text-white p-1 mt-1 px-3 rounded border-yellow-500 border-2" @click="followUser()">
           Follow
           <i class="fas fa-user-plus pl-2"></i>
