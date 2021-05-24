@@ -19,17 +19,17 @@
       <div class="flex">
         <div class="w-16">
         </div>
-        <button v-if="!state.followings.find(f => f.followingId == profile.id) && state.following == false" class="text-yellow-500 hover:bg-yellow-500 hover:text-white p-1 mt-1 px-3 rounded border-yellow-500 border-2" @click="followUser()">
+        <button v-if="!state.followings.find(f => f.followingId == profile.id) && state.following == false" class="text-yellow-500 hover:bg-yellow-500 hover:text-white text-sm p-1 mt-1 px-3 rounded border-yellow-500 border-2" @click="followUser()">
           Follow
           <i class="fas fa-user-plus pl-2"></i>
         </button>
 
-        <button v-if="state.followings.find(f => f.followingId == profile.id) && state.clicked == false" @click="state.clicked = true" class="bg-yellow-500 p-1 mt-1 px-3 rounded border-yellow-500 border-2 text-white">
+        <button v-if="state.followings.find(f => f.followingId == profile.id) && state.clicked == false" @click="state.clicked = true" class="bg-yellow-500 p-1 mt-1 px-3 rounded border-yellow-500 border-2 text-white text-sm">
           Following
           <i class="fas fa-user-check pl-2"></i>
         </button>
 
-        <button v-if="state.clicked == true" @click="unfollowUser()" class="bg-yellow-500 p-1 mt-1 px-3 rounded border-yellow-500 border-2 text-white">
+        <button v-if="state.clicked == true" @click="unfollowUser()" class="bg-yellow-500 p-1 mt-1 px-3 rounded border-yellow-500 border-2 text-white text-sm">
           Unfollow
           <i class="fas fa-user-times pl-2"></i>
         </button>
