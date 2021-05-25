@@ -5,6 +5,7 @@
   <main>
     <router-view />
   </main>
+  <Messages class="position" />
 </template>
 
 <script>
@@ -39,5 +40,13 @@ export default {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(146, 146, 146);
+}
+
+.position {
+  position: fixed;
+  bottom: 0px;
+  right: 20px;
+  border: black 1px solid;
+  border-bottom: 0px;
 }
 </style>
