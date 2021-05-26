@@ -11,20 +11,35 @@
       </div>
     </div>
     <div v-if="state.expanded == true" class="border-top ovrflw">
-      <div v-if="state.write == false">
-        <div class="border-top border-bottom py-2 flex items-center" v-for="chat in state.chats" :key="chat.id">
+      <div v-if="state.write == false && state.messaging == false">
+        <div @click="state.chatter = chat.user, state.messaging = true" class="border-top border-bottom py-2 flex items-center" v-for="chat in state.chats" :key="chat.id">
           <img :src="chat.user.picture" class="h-8 mx-2 rounded-full">
           <p class="text-sm">
             {{ chat.user.name }}
           </p>
         </div>
       </div>
-      <div v-if="state.write == true">
-        <div class="border-top border-bottom py-2 flex items-center" v-for="following in state.followings" :key="following.id">
+      <div v-if="state.write == true && state.messaging == false">
+        <div @click="state.chatter = following.user, state.messaging = true, chat()" class="border-top border-bottom py-2 flex items-center" v-for="following in state.followings" :key="following.id">
           <img :src="following.user.picture" class="h-8 mx-2 rounded-full">
           <p class="text-sm">
             {{ following.user.name }}
           </p>
+        </div>
+      </div>
+      <div class="flex flex-col flex-grow" v-if="state.messaging == true">
+        <div class="border-bottom flex items-center p-2">
+          <i @click="state.messaging = false" class="fas fa-chevron-left"></i>
+          <img :src="state.chatter.picture" class="h-6 rounded-full ml-3 mr-2" alt="">
+          <p>{{ state.chatter.name }}</p>
+        </div>
+        <div>
+          messages and whatnot
+        </div>
+        <div class="pos-rel width">
+          <form class="border-top w-100">
+            <input type="text" class="w-100 p-1" placeholder="New message">
+          </form>
         </div>
       </div>
     </div>
@@ -34,16 +49,27 @@
 <script>
 import { reactive, computed } from 'vue'
 import { AppState } from '../AppState'
+import { chatsService } from '../services/ChatsService'
 export default {
   setup() {
     const state = reactive({
+      account: computed(() => AppState.account),
       chats: computed(() => AppState.chats),
       followings: computed(() => AppState.following),
       expanded: false,
-      write: false
+      write: false,
+      messaging: false,
+      chatter: {}
     })
     return {
-      state
+      state,
+      chat() {
+        const newChat = {
+          ParticipantOne: state.account.id,
+          ParticipantTwo: state.chatter.id
+        }
+        chatsService.create(newChat)
+      }
     }
   }
 }
@@ -56,5 +82,12 @@ export default {
 .ovrflw {
   overflow-y: scroll;
   height: inherit;
+}
+.pos-rel {
+  position: absolute;
+  bottom: 0px
+}
+.width {
+  width: 90%
 }
 </style>
