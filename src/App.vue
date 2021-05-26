@@ -5,7 +5,7 @@
   <main>
     <router-view />
   </main>
-  <Messages class="position" />
+  <Messages class="position" v-if="user.isAuthenticated" />
 </template>
 
 <script>
@@ -15,7 +15,7 @@ export default {
   name: 'App',
   setup() {
     return {
-      appState: computed(() => AppState)
+      user: computed(() => AppState.user)
     }
   }
 }
