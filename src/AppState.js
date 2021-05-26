@@ -8,6 +8,7 @@ export const AppState = reactive({
   ratings: [],
   answerRatings: [],
   following: [],
+  chats: [],
   // data for the feed page
   questionFeed: [],
   answerFeed: [],

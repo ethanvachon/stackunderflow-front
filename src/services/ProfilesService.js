@@ -69,6 +69,11 @@ class ProfilesService {
     }
     // AppState.answerFeed = res.data
   }
+
+  async getChats(id) {
+    const res = await api.get('api/profiles/' + id + '/chats')
+    AppState.chats = res.data
+  }
 }
 
 export const profilesService = new ProfilesService()
