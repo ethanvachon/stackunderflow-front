@@ -7,6 +7,15 @@ class ChatsService {
     const res = await api.get('api/profiles/' + AppState.account.id + '/chats')
     AppState.chats = res.data
   }
+
+  async sendMessage(newMessage) {
+    await api.post('api/messages', newMessage)
+  }
+
+  async getMessages(id) {
+    const res = await api.get('api/chats/' + id + '/messages')
+    AppState.tempMessages = res.data
+  }
 }
 
 export const chatsService = new ChatsService()

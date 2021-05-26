@@ -24,5 +24,7 @@ export const AppState = reactive({
   //  single question for question page
   question: {},
   // answers displayed on question page
-  answers: []
+  answers: [],
+  // messages in chat after selection
+  tempMessages: []
 })
