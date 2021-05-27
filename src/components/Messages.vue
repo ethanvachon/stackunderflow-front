@@ -34,7 +34,7 @@
           <p>{{ state.chatter.name }}</p>
         </div>
         <div>
-          {{ state.tempMessages }}
+          {{ state.messages }}
         </div>
         <div class="pos-rel width">
           <form class="border-top w-100" @submit.prevent="sendMessage()">
