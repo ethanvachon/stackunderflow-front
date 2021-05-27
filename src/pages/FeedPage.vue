@@ -9,21 +9,13 @@
           Answers
         </option>
       </select>
-      <!-- <div class="bg-white rounded shadow flex justify-around mt-3 sizing">
-        <h1 class="p-2 m-3 hover:text-white hover:bg-black rounded" @click="state.display = 'questions'">
-          Questions
-        </h1>
-        <h1 class="p-2 m-3 hover:text-white hover:bg-black rounded" @click="state.display = 'answers'">
-          Answers
-        </h1>
-      </div> -->
     </div>
-    <div v-if="state.display == 'Questions'">
+    <div class="mb-3" v-if="state.display == 'Questions'">
       <div class="my-3" v-for="question in state.feedQuestions" :key="question.id">
         <question :question="question" />
       </div>
     </div>
-    <div v-if="state.display == 'Answers'">
+    <div class="mb-3" v-if="state.display == 'Answers'">
       <div class="my-3" v-for="answer in state.feedAnswers" :key="answer.id">
         <answer :answer="answer" />
       </div>

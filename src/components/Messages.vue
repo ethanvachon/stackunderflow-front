@@ -12,7 +12,7 @@
     </div>
     <div v-if="state.expanded == true" class="border-top ovrflw">
       <div v-if="state.write == false && state.messaging == false">
-        <div @click="state.chatter = chat.user, state.messaging = true" class="border-top border-bottom py-2 flex items-center" v-for="chat in state.chats" :key="chat.id">
+        <div @click="state.chatter = chat.user, state.messaging = true, getMessages(chat.user.id)" class="border-top border-bottom py-2 flex items-center" v-for="chat in state.chats" :key="chat.id">
           <img :src="chat.user.picture" class="h-8 mx-2 rounded-full">
           <p class="text-sm">
             {{ chat.user.name }}
@@ -34,11 +34,11 @@
           <p>{{ state.chatter.name }}</p>
         </div>
         <div>
-          messages and whatnot
+          {{ state.tempMessages }}
         </div>
         <div class="pos-rel width">
-          <form class="border-top w-100">
-            <input type="text" class="w-100 p-1" placeholder="New message">
+          <form class="border-top w-100" @submit.prevent="sendMessage()">
+            <input type="text" v-model="state.newMessage" class="w-100 p-1" placeholder="New message">
           </form>
         </div>
       </div>
@@ -56,10 +56,12 @@ export default {
       account: computed(() => AppState.account),
       chats: computed(() => AppState.chats),
       followings: computed(() => AppState.following),
+      messages: computed(() => AppState.tempMessages),
       expanded: false,
       write: false,
       messaging: false,
-      chatter: {}
+      chatter: {},
+      newMessage: ''
     })
     return {
       state,
@@ -69,6 +71,20 @@ export default {
           ParticipantTwo: state.chatter.id
         }
         chatsService.create(newChat)
+      },
+      getMessages(id) {
+        const chat = state.chats.find(c => c.participantOne === state.account.id && c.participantTwo === id)
+        chatsService.getMessages(chat.id)
+      },
+      sendMessage() {
+        const chat = state.chats.find(c => c.participantOne === state.account.id && c.participantTwo === state.chatter.id)
+        const message = {
+          body: state.newMessage,
+          creatorId: state.account.id,
+          chatId: chat.id
+        }
+        state.newMessage = ''
+        chatsService.sendMessage(message)
       }
     }
   }

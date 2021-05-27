@@ -10,6 +10,7 @@ class ChatsService {
 
   async sendMessage(newMessage) {
     await api.post('api/messages', newMessage)
+    this.getMessages(newMessage.chatId)
   }
 
   async getMessages(id) {
