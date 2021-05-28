@@ -55,19 +55,23 @@ class ProfilesService {
   async getQuestionFeed() {
     const id = AppState.account.id
     const res = await api.get('api/profiles/' + id + '/questionfeed')
+    const ary = []
     for (let i = 0; i < res.data.length; i++) {
-      res.data[i].map(q => AppState.questionFeed.push(q))
+      res.data[i].map(q => ary.push(q))
     }
-    // AppState.questionFeed = res.data
+    AppState.questionFeed = ary.sort((a, b) => a.id - b.id)
+    console.log(AppState.questionFeed)
   }
 
   async getAnswerFeed() {
     const id = AppState.account.id
     const res = await api.get('api/profiles/' + id + '/answerfeed')
+    const ary = []
     for (let i = 0; i < res.data.length; i++) {
-      res.data[i].map(a => AppState.answerFeed.push(a))
+      res.data[i].map(a => ary.push(a))
     }
-    // AppState.answerFeed = res.data
+    AppState.answerFeed = ary.sort((a, b) => a.id - b.id)
+    console.log(AppState.answerFeed)
   }
 
   async getChats(id) {
