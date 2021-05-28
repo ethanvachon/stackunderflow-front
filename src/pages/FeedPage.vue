@@ -10,7 +10,7 @@
         </option>
       </select>
       <span class="pl-3 pr-2">Sort by:</span>
-      <select class="p-1" v-model="state.sort" @submit.prevent="sort()">
+      <select class="p-1" v-model="state.sort" @change="sort()">
         <option @click="state.sort = 'Recent'">
           Recent
         </option>
@@ -50,13 +50,12 @@ export default {
       state,
       sort() {
         if (state.sort === 'Recent') {
-          AppState.questionFeed = state.feedQuestions.sort((a, b) => a.id - b.id)
-          AppState.answerFeed = state.feedAnswers.sort((a, b) => a.id - b.id)
+          AppState.questionFeed = state.feedQuestions.sort((a, b) => a.id - b.id).reverse()
+          AppState.answerFeed = state.feedAnswers.sort((a, b) => a.id - b.id).reverse()
         } else if (state.sort === 'Rating') {
-          AppState.questionFeed = state.feedQuestions.sort((a, b) => a.rating + b.rating)
-          AppState.answerFeed = state.feedAnswers.sort((a, b) => a.rating + b.rating)
+          AppState.questionFeed = state.feedQuestions.sort((a, b) => a.rating - b.rating).reverse()
+          AppState.answerFeed = state.feedAnswers.sort((a, b) => a.rating - b.rating).reverse()
         }
-        // console.log(AppState.questionFeed.sort((a, b) => a.rating - b.rating).reverse())
       }
     }
   }
