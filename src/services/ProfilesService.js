@@ -60,7 +60,6 @@ class ProfilesService {
       res.data[i].map(q => ary.push(q))
     }
     AppState.questionFeed = ary.sort((a, b) => a.id - b.id)
-    console.log(AppState.questionFeed)
   }
 
   async getAnswerFeed() {
@@ -71,7 +70,6 @@ class ProfilesService {
       res.data[i].map(a => ary.push(a))
     }
     AppState.answerFeed = ary.sort((a, b) => a.id - b.id)
-    console.log(AppState.answerFeed)
   }
 
   async getChats(id) {
