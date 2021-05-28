@@ -1,16 +1,16 @@
 <template>
-  <div class="bg-white p-2 rounding w-72 transition-all" :class="{ 'h-10' : state.expanded == false, 'h-96' : state.expanded == true}">
+  <div class="bg-white py-2 rounding w-80 transition-all" :class="{ 'h-10' : state.expanded == false, 'h-96' : state.expanded == true}">
     <div class="flex justify-between pb-2" @click="state.expanded = !state.expanded">
-      <h1 class="font-bold text-md">
+      <h1 class="font-bold text-md pl-2">
         Messages
       </h1>
       <div class="flex items-center">
         <i class="fas fa-edit pr-4" @click="state.expanded = false, state.write = !state.write"></i>
-        <i v-if="state.expanded == false" class="fas fa-chevron-down"></i>
-        <i v-if="state.expanded == true" class="fas fa-chevron-up"></i>
+        <i v-if="state.expanded == false" class="fas fa-chevron-down pr-2"></i>
+        <i v-if="state.expanded == true" class="fas fa-chevron-up pr-2"></i>
       </div>
     </div>
-    <div v-if="state.expanded == true" class="border-top ovrflw">
+    <div v-if="state.expanded == true" class="border-top ovrflw" id="chat">
       <div v-if="state.write == false && state.messaging == false">
         <div @click="state.chatter = chat.user, state.messaging = true, getMessages(chat.user.id)" class="border-top border-bottom py-2 flex items-center" v-for="chat in state.chats" :key="chat.id">
           <img :src="chat.user.picture" class="h-8 mx-2 rounded-full">
@@ -33,12 +33,17 @@
           <img :src="state.chatter.picture" class="h-6 rounded-full ml-3 mr-2" alt="">
           <p>{{ state.chatter.name }}</p>
         </div>
-        <div>
-          {{ state.messages }}
+        <div class="custom-bg px-2 mb-20">
+          <div class="p-1 border-bottom break-words" v-for="message in state.messages" :key="message.id">
+            <p class="font-bold text-sm">
+              {{ message.creator.name }}
+            </p>
+            <p>{{ message.body }}</p>
+          </div>
         </div>
         <div class="pos-rel width">
           <form class="border-top w-100" @submit.prevent="sendMessage()">
-            <input type="text" v-model="state.newMessage" class="w-100 p-1" placeholder="New message">
+            <input type="text" v-model="state.newMessage" class="w-100 p-1 pb-3" placeholder="New message">
           </form>
         </div>
       </div>
@@ -50,6 +55,7 @@
 import { reactive, computed } from 'vue'
 import { AppState } from '../AppState'
 import { chatsService } from '../services/ChatsService'
+import $ from 'jquery'
 export default {
   setup() {
     const state = reactive({
@@ -72,9 +78,10 @@ export default {
         }
         chatsService.create(newChat)
       },
-      getMessages(id) {
+      async getMessages(id) {
         const chat = state.chats.find(c => c.participantOne === state.account.id && c.participantTwo === id)
-        chatsService.getMessages(chat.id)
+        await chatsService.getMessages(chat.id)
+        $('#chat').scrollTop($('#chat')[0].scrollHeight)
       },
       sendMessage() {
         const chat = state.chats.find(c => c.participantOne === state.account.id && c.participantTwo === state.chatter.id)
@@ -104,6 +111,9 @@ export default {
   bottom: 0px
 }
 .width {
-  width: 90%
+  width: 100%
+}
+.custom-bg {
+  background: #fafafa
 }
 </style>
