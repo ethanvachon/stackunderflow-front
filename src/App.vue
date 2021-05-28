@@ -5,6 +5,7 @@
   <main>
     <router-view />
   </main>
+  <Messages class="position" v-if="user.isAuthenticated" />
 </template>
 
 <script>
@@ -14,7 +15,7 @@ export default {
   name: 'App',
   setup() {
     return {
-      appState: computed(() => AppState)
+      user: computed(() => AppState.user)
     }
   }
 }
@@ -27,7 +28,7 @@ export default {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f2f2f2
+  background: #e2e2e2
 }
 
 /* Handle */
@@ -39,5 +40,13 @@ export default {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(146, 146, 146);
+}
+
+.position {
+  position: fixed;
+  bottom: 0px;
+  right: 20px;
+  border: black 1px solid;
+  border-bottom: 0px;
 }
 </style>

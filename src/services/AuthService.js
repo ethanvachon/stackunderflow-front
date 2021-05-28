@@ -27,6 +27,7 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function() {
   await profilesService.getRatingsByProfile(AppState.account.id)
   await profilesService.getAnswerRatingsByProfile(AppState.account.id)
   await profilesService.getFollowingsByProfile(AppState.account.id)
+  await profilesService.getChats(AppState.account.id)
   await profilesService.getQuestionFeed()
   await profilesService.getAnswerFeed()
 })
