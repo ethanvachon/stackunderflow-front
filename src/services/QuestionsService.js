@@ -1,4 +1,5 @@
 import { AppState } from '../AppState'
+import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
 class QuestionsService {
@@ -27,45 +28,61 @@ class QuestionsService {
   }
 
   async upvote(id) {
-    await api.put('api/questions/' + id + '/up')
-    const newRating = {
-      RatedId: id,
-      Rating: true
+    try {
+      const newRating = {
+        RatedId: id,
+        Rating: true
+      }
+      await api.post('api/ratings/', newRating)
+      await api.put('api/questions/' + id + '/up')
+      this.getQuestions()
+    } catch (error) {
+      logger.log(error)
     }
-    await api.post('api/ratings/', newRating)
-    this.getQuestions()
   }
 
   async downvote(id) {
-    await api.put('api/questions/' + id + '/down')
-    const newRating = {
-      RatedId: id,
-      Rating: false
+    try {
+      const newRating = {
+        RatedId: id,
+        Rating: false
+      }
+      await api.post('api/ratings/', newRating)
+      await api.put('api/questions/' + id + '/down')
+      this.getQuestions()
+    } catch (error) {
+      logger.log(error)
     }
-    await api.post('api/ratings/', newRating)
-    this.getQuestions()
   }
 
   // referenced on question page for different get req
   async downvoteqp(id) {
-    await api.put('api/questions/' + id + '/down')
-    const newRating = {
-      RatedId: id,
-      Rating: false
+    try {
+      const newRating = {
+        RatedId: id,
+        Rating: false
+      }
+      await api.post('api/ratings/', newRating)
+      await api.put('api/questions/' + id + '/down')
+      this.getOne(id)
+    } catch (error) {
+      logger.log(error)
     }
-    await api.post('api/ratings/', newRating)
-    this.getOne(id)
   }
 
   // referenced on question page for different get req
   async upvoteqp(id) {
-    await api.put('api/questions/' + id + '/up')
-    const newRating = {
-      RatedId: id,
-      Rating: true
+    try {
+      const newRating = {
+        RatedId: id,
+        Rating: true
+      }
+      await api.post('api/ratings/', newRating)
+      await api.put('api/questions/' + id + '/up')
+      this.getOne(id)
+    } catch (error) {
+      logger.log(error)
     }
-    await api.post('api/ratings/', newRating)
-    this.getOne(id)
   }
 
   async getRatings(id) {
