@@ -100,6 +100,7 @@ export default {
       editName() {
         profilesService.editName(state.newName)
         state.editName = false
+        state.newName = 'new name'
       },
       imageExists(url, callback) {
         const img = new Image()
@@ -117,6 +118,7 @@ export default {
           }
         })
         state.editImage = false
+        state.newImage = 'new image'
       }
     }
   }

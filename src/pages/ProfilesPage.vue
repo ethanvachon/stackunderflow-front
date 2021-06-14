@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="state.loaded">
     <div class="row">
       <profile v-for="profile in state.profiles" :key="profile.id" :profile="profile" />
     </div>
@@ -12,10 +12,12 @@ import { profilesService } from '../services/ProfilesService'
 export default {
   setup() {
     const state = reactive({
-      profiles: computed(() => AppState.profiles)
+      profiles: computed(() => AppState.profiles),
+      loaded: false
     })
     onMounted(async() => {
       await profilesService.getProfiles()
+      state.loaded = true
     })
     return {
       state
