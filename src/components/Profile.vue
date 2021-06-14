@@ -1,6 +1,6 @@
 <template>
   <div class="col-3 my-3">
-    <div class="my-1 bg-white rounded shadow px-2 pb-2">
+    <div class="my-1 bg-white rounded shadow px-2 pb-2 height">
       <div class="flex pt-2">
         <div class="flex justify-center items-center w-16">
           <router-link :to="{name: 'ProfilePage', params: {id: profile.id}}">
@@ -86,5 +86,8 @@ a:hover {
 }
 #hover-text-black {
   color: white;
+}
+.height {
+  height: 7.5rem
 }
 </style>

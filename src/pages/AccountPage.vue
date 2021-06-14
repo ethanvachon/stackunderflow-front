@@ -65,6 +65,7 @@
 </template>
 
 <script>
+/* eslint-disable node/no-callback-literal */
 import { reactive, onMounted, computed } from 'vue'
 import { profilesService } from '../services/ProfilesService'
 import { AppState } from '../AppState'
@@ -100,8 +101,21 @@ export default {
         profilesService.editName(state.newName)
         state.editName = false
       },
-      editImage() {
-        profilesService.editImage(state.newImage)
+      imageExists(url, callback) {
+        const img = new Image()
+        img.onload = function() { callback(true) }
+        img.onerror = function() { callback(false) }
+        img.src = url
+      },
+      async editImage() {
+        const imageUrl = state.newImage
+        await this.imageExists(imageUrl, function(exists) {
+          if (exists) {
+            profilesService.editImage(state.newImage)
+          } else {
+            console.log('invalid img url')
+          }
+        })
         state.editImage = false
       }
     }
